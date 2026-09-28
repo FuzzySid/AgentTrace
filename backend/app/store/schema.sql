@@ -1,0 +1,19 @@
+CREATE TABLE IF NOT EXISTS spans (
+    trace_id VARCHAR NOT NULL,
+    span_id VARCHAR PRIMARY KEY,
+    parent_span_id VARCHAR,
+    task_id VARCHAR NOT NULL,
+    run_id VARCHAR NOT NULL,
+    name VARCHAR NOT NULL,
+    operation_name VARCHAR,
+    depth INTEGER NOT NULL DEFAULT 0,
+    start_time TIMESTAMP NOT NULL,
+    end_time TIMESTAMP,
+    duration_ms DOUBLE,
+    status VARCHAR NOT NULL DEFAULT 'UNSET',
+    capture_tier VARCHAR NOT NULL DEFAULT 'attrs',
+    tokens_in BIGINT,
+    tokens_out BIGINT,
+    cost_eur DOUBLE,
+    attributes JSON NOT NULL DEFAULT '{}'
+);

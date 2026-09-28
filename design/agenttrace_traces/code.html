@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"error":"#ffb4ab","secondary":"#c7bfff","on-secondary-container":"#b8afff","secondary-fixed":"#e5deff","outline-variant":"#404753","status-warning":"#E9B86E","background":"#111124","surface-container-high":"#28283c","tertiary-container":"#e47500","surface-container-low":"#1a1a2d","secondary-fixed-dim":"#c7bfff","primary-fixed-dim":"#a2c9ff","surface-container-lowest":"#0c0c1f","on-error-container":"#ffdad6","on-surface":"#e2e0fb","border-contrast":"#42425E","surface":"#111124","outline":"#8a919e","on-background":"#e2e0fb","on-primary-fixed-variant":"#004881","text-muted":"#A0A1C0","shell-bg":"#141419","surface-elevated":"#212135","on-tertiary-container":"#492100","status-pass":"#47AE8F","on-tertiary-fixed-variant":"#713700","primary-container":"#1496ff","primary":"#a2c9ff","on-secondary-fixed":"#180065","surface-hover":"#2A2A42","on-tertiary":"#4f2500","on-primary-fixed":"#001c38","border-subtle":"#323248","tertiary":"#ffb784","status-error":"#DA7288","on-error":"#690005","on-surface-variant":"#bfc7d5","on-secondary-fixed-variant":"#4226bd","text-primary":"#F0F0F5","on-tertiary-fixed":"#301400","surface-container":"#1e1e31","on-primary":"#00315b","surface-bright":"#38374c","on-secondary":"#2b009e","primary-fixed":"#d3e4ff","on-primary-container":"#002d53","inverse-surface":"#e2e0fb","secondary-container":"#442ac0","tertiary-fixed":"#ffdcc6","surface-variant":"#333347","text-disabled":"#686985","tertiary-fixed-dim":"#ffb784","inverse-primary":"#0060a8","surface-dim":"#111124","error-container":"#93000a","surface-container-highest":"#333347","surface-tint":"#a2c9ff","inverse-on-surface":"#2f2e43"},borderRadius:{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},spacing:{"margin":"0.75rem","space-sm":"0.375rem","space-xs":"0.25rem","space-lg":"0.75rem","gutter":"0.5rem","space-md":"0.5rem","space-xl":"1rem"},fontFamily:{"label-md":["Inter"],"code-num":["JetBrains Mono"],"headline-xl":["Inter"],"headline-md":["Inter"],"body-sm":["Inter"],"code-md":["JetBrains Mono"],"code-sm":["JetBrains Mono"],"headline-lg":["Inter"],"body-md":["Inter"]},fontSize:{"label-md":["11px",{"lineHeight":"14px","letterSpacing":"0.01em","fontWeight":"500"}],"code-num":["11px",{"lineHeight":"14px","fontWeight":"500"}],"headline-xl":["20px",{"lineHeight":"26px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-md":["14px",{"lineHeight":"18px","letterSpacing":"-0.005em","fontWeight":"600"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"code-md":["12px",{"lineHeight":"16px","fontWeight":"400"}],"code-sm":["11px",{"lineHeight":"14px","fontWeight":"400"}],"headline-lg":["16px",{"lineHeight":"22px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-md":["13px",{"lineHeight":"18px","fontWeight":"400"}]}}}}</script></head><body class="bg-surface-container-low font-body-sm text-text-primary antialiased min-h-screen selection:bg-primary-container selection:text-text-primary"><aside class="fixed left-0 top-0 h-full w-[200px] bg-shell-bg z-50 flex flex-col justify-between p-margin border-r border-border-subtle"><div class="flex flex-col gap-space-lg"><div class="flex items-center gap-space-md pb-space-sm border-b border-border-subtle"><img alt="AgentTrace Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1U5a-OYtYuTzmoYG7f1hb7fK9Rlpy4zHjXdPs1GRmfRXnqSf2pvW_foVsUM6bV4LSTzH_Ty7Cqf6TUm171qDC1ezBAu7olAK2jEX8Ys94H-Xs-1B2OYv772sQi3RBda0NujRnD-QTAfWeWj3JnffAMdesNDHzRJE5v7ZQEi3A51WuDAbttrdo56RvUwiqehTyjVD7acD7vzQfeJYIpy8lYDOEZy8jpuvTDJ2kPdlHK7YT7etW7QYSt9"/><span class="font-code-md text-code-md font-semibold tracking-tight text-text-primary">AgentTrace</span></div><nav class="flex flex-col gap-space-xs" data-active-classes="bg-surface-elevated text-primary font-medium border border-border-subtle"><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg transition-colors bg-surface-elevated text-primary font-medium border border-border-subtle" data-path="traces" href="#"><span class="material-symbols-outlined text-[16px]">account_tree</span><span>Traces</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-text-muted hover:bg-surface-elevated hover:text-text-primary transition-colors font-body-sm text-body-sm" data-path="cost" href="#"><span class="material-symbols-outlined text-[16px]">payments</span><span>Cost</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-text-muted hover:bg-surface-elevated hover:text-text-primary transition-colors font-body-sm text-body-sm" data-path="regressions" href="#"><span class="material-symbols-outlined text-[16px]">compare_arrows</span><span>Regressions</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-text-muted hover:bg-surface-elevated hover:text-text-primary transition-colors font-body-sm text-body-sm" data-path="telemetry" href="#"><span class="material-symbols-outlined text-[16px]">monitoring</span><span>Telemetry</span></a></nav></div><div class="font-code-sm text-code-sm text-text-muted bg-surface-container-low px-space-md py-space-xs rounded-lg border border-border-subtle flex items-center justify-between"><span class="text-text-disabled">tier:</span><span class="text-primary font-medium">attrs</span></div></aside><div class="pl-[200px] flex flex-col min-h-screen"><header class="fixed top-0 left-[200px] right-0 h-12 bg-shell-bg border-b border-border-subtle px-margin z-40 flex items-center justify-between font-body-sm text-body-sm"><div class="flex items-center gap-space-md"><img alt="AgentTrace Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1U5a-OYtYuTzmoYG7f1hb7fK9Rlpy4zHjXdPs1GRmfRXnqSf2pvW_foVsUM6bV4LSTzH_Ty7Cqf6TUm171qDC1ezBAu7olAK2jEX8Ys94H-Xs-1B2OYv772sQi3RBda0NujRnD-QTAfWeWj3JnffAMdesNDHzRJE5v7ZQEi3A51WuDAbttrdo56RvUwiqehTyjVD7acD7vzQfeJYIpy8lYDOEZy8jpuvTDJ2kPdlHK7YT7etW7QYSt9"/><div class="flex items-center gap-space-xs bg-surface-elevated px-space-md py-space-xs rounded-lg border border-border-subtle cursor-pointer hover:border-border-contrast transition-colors"><span class="font-code-sm text-code-sm text-text-primary font-medium">run_2026-09-28T14:22</span><span class="material-symbols-outlined text-[14px] text-text-muted">expand_more</span></div><span class="text-text-muted font-body-sm text-body-sm">· 30 tasks</span><span class="font-code-sm text-code-sm text-primary bg-primary-container/15 border border-primary/30 px-space-sm py-0.5 rounded-lg">attrs</span><div class="flex items-center gap-space-xs font-code-sm text-code-sm ml-space-xs"><span class="inline-block w-1.5 h-1.5 rounded-full bg-status-pass"></span><span class="text-status-pass">24 passed</span><span class="text-text-disabled">·</span><span class="inline-block w-1.5 h-1.5 rounded-full bg-status-error"></span><span class="text-status-error">6 failed</span></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs bg-surface-elevated px-space-md py-space-xs rounded-lg border border-border-subtle cursor-pointer text-text-muted hover:text-text-primary hover:border-border-contrast transition-colors"><span class="material-symbols-outlined text-[14px]">schedule</span><span class="font-body-sm text-body-sm">Last 2h</span></div><div class="font-code-sm text-code-sm text-text-muted bg-surface-container-low px-space-md py-space-xs rounded-lg border border-border-subtle">prod-agent-cluster-04</div><div class="flex items-center gap-space-xs text-text-disabled font-code-sm text-code-sm"><kbd class="px-space-xs py-0.5 bg-surface-elevated rounded-lg border border-border-subtle text-text-muted">⌘K</kbd><span>palette</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="w-full pt-12 bg-surface-container-low min-h-screen text-text-primary"><div class="flex flex-col w-full h-[calc(100vh-3rem)] overflow-hidden bg-surface-container-low text-text-primary">
+<div class="flex flex-row w-full h-full overflow-hidden">
+<!-- LEFT PANE: Task Trace List & Failure Ground Truth (380px fixed) -->
+<div class="w-[380px] shrink-0 border-r border-border-subtle flex flex-col h-full overflow-hidden bg-surface">
+<!-- Top Filters -->
+<div class="p-space-md border-b border-border-subtle flex flex-col gap-space-sm bg-shell-bg/70 shrink-0">
+<!-- Segmented Controls -->
+<div class="flex items-center justify-between gap-space-xs bg-surface-container-lowest p-0.5 rounded-lg border border-border-subtle">
+<button class="flex-1 py-1 px-space-xs text-center font-label-md text-label-md rounded text-text-muted hover:text-text-primary transition-colors" type="button">
+            All <span class="font-code-sm text-code-sm text-text-disabled ml-0.5">30</span>
+</button>
+<button class="flex-1 py-1 px-space-xs text-center font-label-md text-label-md rounded bg-status-error/15 text-status-error border border-status-error/30 font-medium" type="button">
+            Failed <span class="font-code-sm text-code-sm text-status-error ml-0.5">6</span>
+</button>
+<button class="flex-1 py-1 px-space-xs text-center font-label-md text-label-md rounded text-text-muted hover:text-text-primary transition-colors" type="button">
+            Passed <span class="font-code-sm text-code-sm text-text-disabled ml-0.5">24</span>
+</button>
+</div>
+<!-- Filter Row & Category Dropdown -->
+<div class="flex items-center gap-space-xs">
+<div class="relative flex-1">
+<span class="material-symbols-outlined text-[14px] text-text-disabled absolute left-2 top-2">search</span>
+<input class="w-full h-7 pl-6 pr-8 bg-surface-elevated text-text-primary text-body-sm font-code-sm placeholder:text-text-disabled border border-border-subtle rounded-lg focus:outline-none focus:border-primary-container" placeholder="Filter tasks (e.g. fx_014, tool)..." type="text" value="task_fx_"/>
+<kbd class="absolute right-1.5 top-1.5 px-1 py-0.2 bg-surface border border-border-subtle rounded font-code-sm text-[9px] text-text-muted">⌘F</kbd>
+</div>
+<div class="flex items-center gap-1 bg-surface-elevated border border-border-subtle px-2 h-7 rounded-lg text-text-muted hover:text-text-primary hover:border-border-contrast cursor-pointer text-label-md font-label-md">
+<span>Cat: All</span>
+<span class="material-symbols-outlined text-[13px]">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Task Trace List Table -->
+<div class="flex-1 overflow-y-auto divide-y divide-border-subtle/50 select-none">
+<!-- Row 1: Selected Failed Task -->
+<div class="h-[34px] flex items-center justify-between px-space-md border-l-[3px] border-l-status-error bg-surface-hover cursor-pointer group">
+<div class="flex items-center gap-space-xs min-w-0">
+<span class="w-1.5 h-1.5 rounded-full bg-status-error shrink-0"></span>
+<span class="font-code-sm text-code-sm text-text-primary font-medium truncate">task_fx_014_run2</span>
+<span class="font-code-sm text-[10px] text-status-error bg-status-error/15 border border-status-error/30 px-1 py-0.2 rounded shrink-0">tool</span>
+</div>
+<div class="flex items-center gap-space-md shrink-0 font-code-sm text-code-sm">
+<span class="text-status-error">4,820ms</span>
+<span class="text-text-disabled">€0.0042</span>
+</div>
+</div>
+<!-- Row 2: Failed Retrieval Task -->
+<div class="h-[34px] flex items-center justify-between px-space-md border-l-[3px] border-l-status-error hover:bg-surface-elevated cursor-pointer transition-colors group">
+<div class="flex items-center gap-space-xs min-w-0">
+<span class="w-1.5 h-1.5 rounded-full bg-status-error shrink-0"></span>
+<span class="font-code-sm text-code-sm text-text-primary truncate">task_fx_021_run1</span>
+<span class="font-code-sm text-[10px] text-status-error bg-status-error/15 border border-status-error/30 px-1 py-0.2 rounded shrink-0">retrieval</span>
+</div>
+<div class="flex items-center gap-space-md shrink-0 font-code-sm text-code-sm">
+<span class="text-status-error">2,190ms</span>
+<span class="text-text-disabled">€0.0018</span>
+</div>
+</div>
+<!-- Row 3: Failed Orchestration Task -->
+<div class="h-[34px] flex items-center justify-between px-space-md border-l-[3px] border-l-status-error hover:bg-surface-elevated cursor-pointer transition-colors group">
+<div class="flex items-center gap-space-xs min-w-0">
+<span class="w-1.5 h-1.5 rounded-full bg-status-error shrink-0"></span>
+<span class="font-code-sm text-code-sm text-text-primary truncate">task_fx_008_plan</span>
+<span class="font-code-sm text-[10px] text-status-error bg-status-error/15 border border-status-error/30 px-1 py-0.2 rounded shrink-0">orchestration</span>
+</div>
+<div class="flex items-center gap-space-md shrink-0 font-code-sm text-code-sm">
+<span class="text-status-error">8,410ms</span>
+<span class="text-text-disabled">€0.0079</span>
+</div>
+</div>
+<!-- Row 4: Passed Model Task -->
+<div class="h-[34px] flex items-center justify-between px-space-md border-l-[3px] border-l-transparent hover:bg-surface-elevated cursor-pointer transition-colors group">
+<div class="flex items-center gap-space-xs min-w-0">
+<span class="w-1.5 h-1.5 rounded-full bg-status-pass shrink-0"></span>
+<span class="font-code-sm text-code-sm text-text-muted group-hover:text-text-primary truncate">task_fx_019_exec</span>
+<span class="font-code-sm text-[10px] text-secondary bg-secondary-container/20 border border-secondary/30 px-1 py-0.2 rounded shrink-0">model</span>
+</div>
+<div class="flex items-center gap-space-md shrink-0 font-code-sm text-code-sm">
+<span class="text-text-muted">1,420ms</span>
+<span class="text-text-disabled">€0.0011</span>
+</div>
+</div>
+<!-- Row 5: Passed Retrieval Task -->
+<div class="h-[34px] flex items-center justify-between px-space-md border-l-[3px] border-l-transparent hover:bg-surface-elevated cursor-pointer transition-colors group">
+<div class="flex items-center gap-space-xs min-w-0">
+<span class="w-1.5 h-1.5 rounded-full bg-status-pass shrink-0"></span>
+<span class="font-code-sm text-code-sm text-text-muted group-hover:text-text-primary truncate">task_fx_004_vect</span>
+<span class="font-code-sm text-[10px] text-status-pass bg-status-pass/10 border border-status-pass/30 px-1 py-0.2 rounded shrink-0">retrieval</span>
+</div>
+<div class="flex items-center gap-space-md shrink-0 font-code-sm text-code-sm">
+<span class="text-text-muted">890ms</span>
+<span class="text-text-disabled">€0.0008</span>
+</div>
+</div>
+<!-- Row 6: Passed Tool Task -->
+<div class="h-[34px] flex items-center justify-between px-space-md border-l-[3px] border-l-transparent hover:bg-surface-elevated cursor-pointer transition-colors group">
+<div class="flex items-center gap-space-xs min-w-0">
+<span class="w-1.5 h-1.5 rounded-full bg-status-pass shrink-0"></span>
+<span class="font-code-sm text-code-sm text-text-muted group-hover:text-text-primary truncate">task_fx_011_redis</span>
+<span class="font-code-sm text-[10px] text-primary bg-primary-container/15 border border-primary/30 px-1 py-0.2 rounded shrink-0">tool</span>
+</div>
+<div class="flex items-center gap-space-md shrink-0 font-code-sm text-code-sm">
+<span class="text-text-muted">3,110ms</span>
+<span class="text-text-disabled">€0.0029</span>
+</div>
+</div>
+<!-- Row 7: Failed Model Task -->
+<div class="h-[34px] flex items-center justify-between px-space-md border-l-[3px] border-l-status-error hover:bg-surface-elevated cursor-pointer transition-colors group">
+<div class="flex items-center gap-space-xs min-w-0">
+<span class="w-1.5 h-1.5 rounded-full bg-status-error shrink-0"></span>
+<span class="font-code-sm text-code-sm text-text-primary truncate">task_fx_029_eval</span>
+<span class="font-code-sm text-[10px] text-status-error bg-status-error/15 border border-status-error/30 px-1 py-0.2 rounded shrink-0">model</span>
+</div>
+<div class="flex items-center gap-space-md shrink-0 font-code-sm text-code-sm">
+<span class="text-status-error">5,120ms</span>
+<span class="text-text-disabled">€0.0055</span>
+</div>
+</div>
+</div>
+<!-- Bottom Pane: 4x4 Confusion Matrix -->
+<div class="p-space-md border-t border-border-subtle bg-shell-bg/95 flex flex-col gap-2 shrink-0">
+<div class="flex items-center justify-between">
+<span class="font-code-sm text-[10px] uppercase font-semibold tracking-wider text-text-muted">Attribution Accuracy vs Ground Truth</span>
+<span class="font-code-sm text-[11px] font-semibold text-status-pass">93.3%</span>
+</div>
+<div class="border border-border-subtle rounded bg-surface p-1.5 flex flex-col gap-1">
+<!-- Matrix Header -->
+<div class="grid grid-cols-5 text-center font-code-sm text-[9px] text-text-disabled uppercase">
+<div class="text-left pl-1">GT\PR</div>
+<div>Tool</div>
+<div>Retr</div>
+<div>Modl</div>
+<div>Orch</div>
+</div>
+<!-- Row 1: Tool -->
+<div class="grid grid-cols-5 text-center items-center font-code-sm text-[10px] leading-5">
+<div class="text-left pl-1 font-semibold text-text-muted">Tool</div>
+<div class="bg-status-pass/20 text-status-pass font-bold rounded">11</div>
+<div class="text-text-disabled">0</div>
+<div class="bg-status-warning/15 text-status-warning rounded">1</div>
+<div class="text-text-disabled">0</div>
+</div>
+<!-- Row 2: Retr -->
+<div class="grid grid-cols-5 text-center items-center font-code-sm text-[10px] leading-5">
+<div class="text-left pl-1 font-semibold text-text-muted">Retr</div>
+<div class="text-text-disabled">0</div>
+<div class="bg-status-pass/20 text-status-pass font-bold rounded">7</div>
+<div class="text-text-disabled">0</div>
+<div class="text-text-disabled">0</div>
+</div>
+<!-- Row 3: Model -->
+<div class="grid grid-cols-5 text-center items-center font-code-sm text-[10px] leading-5">
+<div class="text-left pl-1 font-semibold text-text-muted">Modl</div>
+<div class="text-text-disabled">0</div>
+<div class="text-text-disabled">0</div>
+<div class="bg-status-pass/20 text-status-pass font-bold rounded">5</div>
+<div class="text-text-disabled">0</div>
+</div>
+<!-- Row 4: Orch -->
+<div class="grid grid-cols-5 text-center items-center font-code-sm text-[10px] leading-5">
+<div class="text-left pl-1 font-semibold text-text-muted">Orch</div>
+<div class="bg-status-warning/15 text-status-warning rounded">1</div>
+<div class="text-text-disabled">0</div>
+<div class="text-text-disabled">0</div>
+<div class="bg-status-pass/20 text-status-pass font-bold rounded">5</div>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT PANE: Centerpiece Span Waterfall & Detail Inspector -->
+<div class="flex-1 flex flex-col h-full overflow-y-auto p-space-lg gap-space-lg bg-surface-container-low">
+<!-- Task Inspection Summary Header -->
+<div class="p-space-md bg-surface-elevated border border-border-subtle rounded-lg flex items-center justify-between shrink-0 shadow-sm">
+<div class="flex flex-col gap-1 min-w-0">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-status-error"></span>
+<span class="font-code-md text-headline-md text-text-primary tracking-tight font-semibold">task_fx_014_run2</span>
+<span class="font-body-md text-body-md text-text-muted">·</span>
+<span class="font-body-md text-body-md text-status-error font-medium truncate">tool.sql_client.query failure</span>
+</div>
+<div class="flex items-center gap-space-xs font-code-sm text-code-sm text-text-muted">
+<span class="text-text-disabled">root_run_id:</span>
+<span class="text-text-primary">01923fa-881b-7821-bc10</span>
+<span class="text-text-disabled">·</span>
+<span>invoked by user agent session #8192</span>
+</div>
+</div>
+<!-- Badges Cluster -->
+<div class="flex items-center gap-space-sm shrink-0">
+<span class="font-code-sm text-code-sm px-2 py-0.5 rounded bg-status-error/15 text-status-error border border-status-error/30 font-medium">Status: 500 error</span>
+<span class="font-code-sm text-code-sm px-2 py-0.5 rounded bg-surface border border-border-subtle text-text-muted">Total spans: 14</span>
+<span class="font-code-sm text-code-sm px-2 py-0.5 rounded bg-surface border border-border-subtle text-text-muted">Duration: 4.82s</span>
+<span class="font-code-sm text-code-sm px-2 py-0.5 rounded bg-surface border border-border-subtle text-primary">Cost: €0.0042</span>
+<button class="h-7 px-2.5 bg-primary-container hover:bg-primary transition-colors text-on-primary-container hover:text-on-primary rounded font-label-md text-label-md flex items-center gap-1 font-medium" type="button">
+<span class="material-symbols-outlined text-[14px]">replay</span>
+<span>Re-execute</span>
+</button>
+</div>
+</div>
+<!-- Waterfall Timeline Visualization Container -->
+<div class="bg-surface-elevated border border-border-subtle rounded-lg flex flex-col overflow-hidden shadow-sm">
+<!-- Header & Control Bar -->
+<div class="px-space-md py-2 border-b border-border-subtle bg-shell-bg/50 flex items-center justify-between">
+<div class="flex items-center gap-space-md">
+<span class="font-label-md text-label-md font-semibold uppercase tracking-wider text-text-muted">Execution Waterfall Timeline</span>
+<div class="flex items-center gap-1 font-code-sm text-[10px] text-text-disabled">
+<span class="w-2 h-2 rounded-sm bg-primary/40"></span><span>Plan/Model</span>
+<span class="w-2 h-2 rounded-sm bg-status-pass/40 ml-1"></span><span>Retrieval</span>
+<span class="w-2 h-2 rounded-sm bg-status-error ml-1"></span><span>Fault Origin</span>
+<span class="w-2 h-2 rounded-sm bg-status-warning ml-1"></span><span>Symptom</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs font-code-sm text-[11px] text-text-muted">
+<span>Ruler span: 0ms – 4,820ms</span>
+<button class="p-1 hover:text-text-primary text-text-disabled" type="button"><span class="material-symbols-outlined text-[15px]">zoom_in</span></button>
+<button class="p-1 hover:text-text-primary text-text-disabled" type="button"><span class="material-symbols-outlined text-[15px]">zoom_out</span></button>
+</div>
+</div>
+<!-- Ruler Track -->
+<div class="relative flex border-b border-border-subtle bg-surface-container-lowest h-6 font-code-sm text-[10px] text-text-disabled select-none">
+<div class="w-[280px] shrink-0 px-space-md border-r border-border-subtle flex items-center font-medium">Span Hierarchy</div>
+<div class="flex-1 relative flex items-center">
+<div class="absolute left-0 pl-1 border-l border-border-contrast h-full flex items-center">0ms</div>
+<div class="absolute left-[20.7%] pl-1 border-l border-border-subtle h-full flex items-center">1000ms</div>
+<div class="absolute left-[41.5%] pl-1 border-l border-border-subtle h-full flex items-center">2000ms</div>
+<div class="absolute left-[62.2%] pl-1 border-l border-border-subtle h-full flex items-center">3000ms</div>
+<div class="absolute left-[83.0%] pl-1 border-l border-border-subtle h-full flex items-center">4000ms</div>
+<div class="absolute right-1 text-right text-text-muted">4820ms</div>
+</div>
+</div>
+<!-- Waterfall Rows Area with background grid lines -->
+<div class="relative flex flex-col divide-y divide-border-subtle/40 bg-surface">
+<!-- Background Grid Vertical Guidelines -->
+<div class="absolute inset-0 left-[280px] pointer-events-none flex">
+<div class="w-[20.7%] border-r border-border-subtle/25 h-full"></div>
+<div class="w-[20.8%] border-r border-border-subtle/25 h-full"></div>
+<div class="w-[20.7%] border-r border-border-subtle/25 h-full"></div>
+<div class="w-[20.8%] border-r border-border-subtle/25 h-full"></div>
+<div class="flex-1 h-full"></div>
+</div>
+<!-- Span Row 1 (Root): agent.execute_cycle -->
+<div class="relative flex items-center h-8 hover:bg-surface-elevated/80 transition-colors">
+<div class="w-[280px] shrink-0 px-space-md flex items-center gap-1.5 border-r border-border-subtle z-10 bg-inherit">
+<span class="material-symbols-outlined text-[13px] text-text-disabled">expand_more</span>
+<span class="font-code-sm text-code-sm text-text-primary font-medium truncate">agent.execute_cycle</span>
+</div>
+<div class="flex-1 relative h-full flex items-center px-1">
+<div class="absolute left-0 w-full h-4 rounded bg-primary-container/20 border border-primary/40 flex items-center px-2">
+<span class="font-code-sm text-[10px] text-primary truncate">4,820ms · 100%</span>
+</div>
+</div>
+</div>
+<!-- Span Row 2 (Depth 1): orchestrator.plan -->
+<div class="relative flex items-center h-8 hover:bg-surface-elevated/80 transition-colors">
+<div class="w-[280px] shrink-0 px-space-md pl-6 flex items-center gap-1.5 border-r border-border-subtle z-10 bg-inherit">
+<span class="text-text-disabled font-code-sm text-[11px]">├─</span>
+<span class="font-code-sm text-code-sm text-text-muted truncate">orchestrator.plan</span>
+</div>
+<div class="flex-1 relative h-full flex items-center px-1">
+<div class="absolute left-[0.2%] w-[8.5%] h-3.5 rounded bg-secondary-container/40 border border-secondary/50 flex items-center justify-center">
+<span class="font-code-sm text-[9px] text-secondary truncate">410ms</span>
+</div>
+</div>
+</div>
+<!-- Span Row 3 (Depth 1): retrieval.vector_search -->
+<div class="relative flex items-center h-8 hover:bg-surface-elevated/80 transition-colors">
+<div class="w-[280px] shrink-0 px-space-md pl-6 flex items-center gap-1.5 border-r border-border-subtle z-10 bg-inherit">
+<span class="text-text-disabled font-code-sm text-[11px]">├─</span>
+<span class="font-code-sm text-code-sm text-text-muted truncate">retrieval.vector_search</span>
+</div>
+<div class="flex-1 relative h-full flex items-center px-1">
+<div class="absolute left-[8.9%] w-[11.4%] h-3.5 rounded bg-status-pass/20 border border-status-pass/40 flex items-center justify-center">
+<span class="font-code-sm text-[9px] text-status-pass truncate">550ms</span>
+</div>
+</div>
+</div>
+<!-- Span Row 4 (Depth 1): model.completion.gpt-4o -->
+<div class="relative flex items-center h-8 hover:bg-surface-elevated/80 transition-colors">
+<div class="w-[280px] shrink-0 px-space-md pl-6 flex items-center gap-1.5 border-r border-border-subtle z-10 bg-inherit">
+<span class="text-text-disabled font-code-sm text-[11px]">├─</span>
+<span class="font-code-sm text-code-sm text-text-muted truncate">model.completion.gpt-4o</span>
+</div>
+<div class="flex-1 relative h-full flex items-center px-1">
+<div class="absolute left-[20.5%] w-[30.3%] h-3.5 rounded bg-secondary-container/40 border border-secondary/50 flex items-center px-1.5">
+<span class="font-code-sm text-[9px] text-secondary truncate">1,460ms · 1.4k tok</span>
+</div>
+</div>
+</div>
+<!-- Span Row 5 (Depth 1): tool.execute.sql_client [PRIMARY FAILURE - SELECTED] -->
+<div class="relative flex items-center h-8 bg-status-error/10 border-l-[3px] border-l-status-error transition-colors">
+<div class="w-[280px] shrink-0 px-space-md pl-6 flex items-center gap-1.5 border-r border-border-subtle z-10 bg-inherit">
+<span class="text-status-error font-code-sm text-[11px]">├─</span>
+<span class="font-code-sm text-code-sm text-status-error font-semibold truncate">tool.execute.sql_client</span>
+</div>
+<div class="flex-1 relative h-full flex items-center px-1">
+<div class="absolute left-[51.0%] w-[37.7%] h-4 rounded bg-status-error/25 border border-status-error flex items-center px-2 justify-between">
+<span class="font-code-sm text-[10px] text-status-error font-bold">1,820ms</span>
+<span class="font-code-sm text-[9px] text-status-error bg-status-error/25 border border-status-error/40 px-1 py-0.2 rounded font-bold uppercase tracking-wider">PRIMARY FAILURE</span>
+</div>
+</div>
+</div>
+<!-- Span Row 6 (Depth 2 under tool): db.postgres.connect -->
+<div class="relative flex items-center h-8 hover:bg-surface-elevated/80 transition-colors">
+<div class="w-[280px] shrink-0 px-space-md pl-10 flex items-center gap-1.5 border-r border-border-subtle z-10 bg-inherit">
+<span class="text-text-disabled font-code-sm text-[11px]">│  ├─</span>
+<span class="font-code-sm text-code-sm text-text-muted truncate">db.postgres.connect</span>
+</div>
+<div class="flex-1 relative h-full flex items-center px-1">
+<div class="absolute left-[51.2%] w-[5.8%] h-3 rounded bg-primary-container/30 border border-primary/40 flex items-center justify-center">
+<span class="font-code-sm text-[9px] text-primary truncate">280ms</span>
+</div>
+</div>
+</div>
+<!-- Span Row 7 (Depth 2 under tool): db.query.statement [TIMEOUT] -->
+<div class="relative flex items-center h-8 hover:bg-surface-elevated/80 transition-colors">
+<div class="w-[280px] shrink-0 px-space-md pl-10 flex items-center gap-1.5 border-r border-border-subtle z-10 bg-inherit">
+<span class="text-status-error font-code-sm text-[11px]">│  └─</span>
+<span class="font-code-sm text-code-sm text-status-error truncate">db.query.statement</span>
+</div>
+<div class="flex-1 relative h-full flex items-center px-1">
+<div class="absolute left-[57.2%] w-[31.5%] h-3.5 rounded bg-status-error/20 border border-status-error/60 flex items-center px-2">
+<span class="font-code-sm text-[9px] text-status-error truncate">1,520ms (socket hangup)</span>
+</div>
+</div>
+</div>
+<!-- Span Row 8 (Depth 1): synthesizer.fallback_retry [DOWNSTREAM SYMPTOM] -->
+<div class="relative flex items-center h-8 hover:bg-surface-elevated/80 transition-colors">
+<div class="w-[280px] shrink-0 px-space-md pl-6 flex items-center gap-1.5 border-r border-border-subtle z-10 bg-inherit">
+<span class="text-status-warning font-code-sm text-[11px]">└─</span>
+<span class="font-code-sm text-code-sm text-text-muted truncate">synthesizer.fallback_retry</span>
+</div>
+<div class="flex-1 relative h-full flex items-center px-1">
+<div class="absolute left-[89.0%] w-[11.0%] h-4 rounded bg-status-warning/20 border border-status-warning/60 flex items-center px-1.5 justify-between">
+<span class="font-code-sm text-[9px] text-status-warning">530ms</span>
+<span class="font-code-sm text-[8px] text-status-warning bg-status-warning/20 border border-status-warning/40 px-1 rounded uppercase font-semibold">DOWNSTREAM SYMPTOM</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Collapsible Span Detail Panel -->
+<div class="bg-surface-elevated border border-border-subtle rounded-lg flex flex-col overflow-hidden shadow-sm">
+<!-- Panel Header -->
+<div class="px-space-md py-2 border-b border-border-subtle bg-shell-bg/70 flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-status-error">bug_report</span>
+<span class="font-code-md text-body-md font-semibold text-text-primary">Selected Span: tool.execute.sql_client</span>
+<span class="font-code-sm text-code-sm text-text-disabled">(span_7f3a9c80b1)</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="font-code-sm text-[10px] text-status-pass bg-status-pass/10 border border-status-pass/30 px-1.5 py-0.5 rounded">
+              Attribution Confidence: 0.96 (tool isolated)
+            </span>
+<button class="text-text-muted hover:text-text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+</button>
+</div>
+</div>
+<!-- 3-Column Dense Key-Value Metadata Grid -->
+<div class="p-space-md grid grid-cols-1 md:grid-cols-3 gap-space-md font-code-sm text-code-sm bg-surface">
+<!-- Column 1: Engine & Model Specs -->
+<div class="flex flex-col gap-1.5 bg-surface-container-lowest p-space-sm rounded border border-border-subtle/80">
+<div class="text-[10px] uppercase font-bold text-text-disabled tracking-wider border-b border-border-subtle/60 pb-1">GenAI & Engine Context</div>
+<div class="flex items-center justify-between">
+<span class="text-text-muted">gen_ai.system:</span>
+<span class="text-primary font-medium">postgresql</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-text-muted">gen_ai.request.model:</span>
+<span class="text-text-primary">gpt-4o-2024-08-06</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-text-muted">gen_ai.response.model:</span>
+<span class="text-text-primary">gpt-4o-2024-08-06</span>
+</div>
+</div>
+<!-- Column 2: Token Metrics -->
+<div class="flex flex-col gap-1.5 bg-surface-container-lowest p-space-sm rounded border border-border-subtle/80">
+<div class="text-[10px] uppercase font-bold text-text-disabled tracking-wider border-b border-border-subtle/60 pb-1">Token Metrics</div>
+<div class="flex items-center justify-between">
+<span class="text-text-muted">gen_ai.usage.prompt:</span>
+<span class="text-text-primary">1,284 tok</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-text-muted">gen_ai.usage.completion:</span>
+<span class="text-text-primary">182 tok</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-text-muted">gen_ai.usage.total:</span>
+<span class="text-secondary font-medium">1,466 tok</span>
+</div>
+</div>
+<!-- Column 3: Error & Root Cause Attribution -->
+<div class="flex flex-col gap-1.5 bg-surface-container-lowest p-space-sm rounded border border-border-subtle/80">
+<div class="text-[10px] uppercase font-bold text-status-error tracking-wider border-b border-border-subtle/60 pb-1">Error Diagnostics</div>
+<div class="flex items-center justify-between">
+<span class="text-text-muted">error.type:</span>
+<span class="text-status-error font-medium truncate ml-1">SocketTimeoutException</span>
+</div>
+<div class="flex flex-col">
+<span class="text-text-muted">error.message:</span>
+<span class="text-status-error text-[10px] leading-tight mt-0.5 line-clamp-2">terminating connection due to idle-in-transaction timeout</span>
+</div>
+</div>
+</div>
+<!-- Tier Notice Callout Banner -->
+<div class="mx-space-md mb-space-md p-space-sm bg-shell-bg rounded border border-border-subtle flex items-start gap-space-sm font-code-sm text-[11px] text-text-muted">
+<span class="material-symbols-outlined text-[15px] text-primary shrink-0 mt-0.5">info</span>
+<div class="flex-1">
+<span class="text-text-primary font-medium">Notice:</span> Content capture is disabled for active tier <span class="text-primary font-semibold">'attrs'</span>. Prompt payload buffers and raw completion responses are omitted from persistent telemetry.
+          </div>
+</div>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

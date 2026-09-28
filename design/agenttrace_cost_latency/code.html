@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"error":"#ffb4ab","secondary":"#c7bfff","on-secondary-container":"#b8afff","secondary-fixed":"#e5deff","outline-variant":"#404753","status-warning":"#E9B86E","background":"#111124","surface-container-high":"#28283c","tertiary-container":"#e47500","surface-container-low":"#1a1a2d","secondary-fixed-dim":"#c7bfff","primary-fixed-dim":"#a2c9ff","surface-container-lowest":"#0c0c1f","on-error-container":"#ffdad6","on-surface":"#e2e0fb","border-contrast":"#42425E","surface":"#111124","outline":"#8a919e","on-background":"#e2e0fb","on-primary-fixed-variant":"#004881","text-muted":"#A0A1C0","shell-bg":"#141419","surface-elevated":"#212135","on-tertiary-container":"#492100","status-pass":"#47AE8F","on-tertiary-fixed-variant":"#713700","primary-container":"#1496ff","primary":"#a2c9ff","on-secondary-fixed":"#180065","surface-hover":"#2A2A42","on-tertiary":"#4f2500","on-primary-fixed":"#001c38","border-subtle":"#323248","tertiary":"#ffb784","status-error":"#DA7288","on-error":"#690005","on-surface-variant":"#bfc7d5","on-secondary-fixed-variant":"#4226bd","text-primary":"#F0F0F5","on-tertiary-fixed":"#301400","surface-container":"#1e1e31","on-primary":"#00315b","surface-bright":"#38374c","on-secondary":"#2b009e","primary-fixed":"#d3e4ff","on-primary-container":"#002d53","inverse-surface":"#e2e0fb","secondary-container":"#442ac0","tertiary-fixed":"#ffdcc6","surface-variant":"#333347","text-disabled":"#686985","tertiary-fixed-dim":"#ffb784","inverse-primary":"#0060a8","surface-dim":"#111124","error-container":"#93000a","surface-container-highest":"#333347","surface-tint":"#a2c9ff","inverse-on-surface":"#2f2e43"},borderRadius:{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},spacing:{"margin":"0.75rem","space-sm":"0.375rem","space-xs":"0.25rem","space-lg":"0.75rem","gutter":"0.5rem","space-md":"0.5rem","space-xl":"1rem"},fontFamily:{"label-md":["Inter"],"code-num":["JetBrains Mono"],"headline-xl":["Inter"],"headline-md":["Inter"],"body-sm":["Inter"],"code-md":["JetBrains Mono"],"code-sm":["JetBrains Mono"],"headline-lg":["Inter"],"body-md":["Inter"]},fontSize:{"label-md":["11px",{"lineHeight":"14px","letterSpacing":"0.01em","fontWeight":"500"}],"code-num":["11px",{"lineHeight":"14px","fontWeight":"500"}],"headline-xl":["20px",{"lineHeight":"26px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-md":["14px",{"lineHeight":"18px","letterSpacing":"-0.005em","fontWeight":"600"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"code-md":["12px",{"lineHeight":"16px","fontWeight":"400"}],"code-sm":["11px",{"lineHeight":"14px","fontWeight":"400"}],"headline-lg":["16px",{"lineHeight":"22px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-md":["13px",{"lineHeight":"18px","fontWeight":"400"}]}}}}</script></head><body class="bg-surface-container-low font-body-sm text-text-primary antialiased min-h-screen selection:bg-primary-container selection:text-text-primary"><aside class="fixed left-0 top-0 h-full w-[200px] bg-shell-bg z-50 flex flex-col justify-between p-margin border-r border-border-subtle"><div class="flex flex-col gap-space-lg"><div class="flex items-center gap-space-md pb-space-sm border-b border-border-subtle"><img alt="AgentTrace Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1U5a-OYtYuTzmoYG7f1hb7fK9Rlpy4zHjXdPs1GRmfRXnqSf2pvW_foVsUM6bV4LSTzH_Ty7Cqf6TUm171qDC1ezBAu7olAK2jEX8Ys94H-Xs-1B2OYv772sQi3RBda0NujRnD-QTAfWeWj3JnffAMdesNDHzRJE5v7ZQEi3A51WuDAbttrdo56RvUwiqehTyjVD7acD7vzQfeJYIpy8lYDOEZy8jpuvTDJ2kPdlHK7YT7etW7QYSt9"/><span class="font-code-md text-code-md font-semibold tracking-tight text-text-primary">AgentTrace</span></div><nav class="flex flex-col gap-space-xs" data-active-classes="bg-surface-elevated text-primary font-medium border border-border-subtle"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-text-muted hover:bg-surface-elevated hover:text-text-primary transition-colors font-body-sm text-body-sm" data-path="traces" href="#"><span class="material-symbols-outlined text-[16px]">account_tree</span><span>Traces</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg transition-colors bg-surface-elevated text-primary font-medium border border-border-subtle" data-path="cost" href="#"><span class="material-symbols-outlined text-[16px]">payments</span><span>Cost</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-text-muted hover:bg-surface-elevated hover:text-text-primary transition-colors font-body-sm text-body-sm" data-path="regressions" href="#"><span class="material-symbols-outlined text-[16px]">compare_arrows</span><span>Regressions</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-text-muted hover:bg-surface-elevated hover:text-text-primary transition-colors font-body-sm text-body-sm" data-path="telemetry" href="#"><span class="material-symbols-outlined text-[16px]">monitoring</span><span>Telemetry</span></a></nav></div><div class="font-code-sm text-code-sm text-text-muted bg-surface-container-low px-space-md py-space-xs rounded-lg border border-border-subtle flex items-center justify-between"><span class="text-text-disabled">tier:</span><span class="text-primary font-medium">attrs</span></div></aside><div class="pl-[200px] flex flex-col min-h-screen"><header class="fixed top-0 left-[200px] right-0 h-12 bg-shell-bg border-b border-border-subtle px-margin z-40 flex items-center justify-between font-body-sm text-body-sm"><div class="flex items-center gap-space-md"><img alt="AgentTrace Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1U5a-OYtYuTzmoYG7f1hb7fK9Rlpy4zHjXdPs1GRmfRXnqSf2pvW_foVsUM6bV4LSTzH_Ty7Cqf6TUm171qDC1ezBAu7olAK2jEX8Ys94H-Xs-1B2OYv772sQi3RBda0NujRnD-QTAfWeWj3JnffAMdesNDHzRJE5v7ZQEi3A51WuDAbttrdo56RvUwiqehTyjVD7acD7vzQfeJYIpy8lYDOEZy8jpuvTDJ2kPdlHK7YT7etW7QYSt9"/><div class="flex items-center gap-space-xs bg-surface-elevated px-space-md py-space-xs rounded-lg border border-border-subtle cursor-pointer hover:border-border-contrast transition-colors"><span class="font-code-sm text-code-sm text-text-primary font-medium">run_2026-09-28T14:22</span><span class="material-symbols-outlined text-[14px] text-text-muted">expand_more</span></div><span class="text-text-muted font-body-sm text-body-sm">· 30 tasks</span><span class="font-code-sm text-code-sm text-primary bg-primary-container/15 border border-primary/30 px-space-sm py-0.5 rounded-lg">attrs</span><div class="flex items-center gap-space-xs font-code-sm text-code-sm ml-space-xs"><span class="inline-block w-1.5 h-1.5 rounded-full bg-status-pass"></span><span class="text-status-pass">24 passed</span><span class="text-text-disabled">·</span><span class="inline-block w-1.5 h-1.5 rounded-full bg-status-error"></span><span class="text-status-error">6 failed</span></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs bg-surface-elevated px-space-md py-space-xs rounded-lg border border-border-subtle cursor-pointer text-text-muted hover:text-text-primary hover:border-border-contrast transition-colors"><span class="material-symbols-outlined text-[14px]">schedule</span><span class="font-body-sm text-body-sm">Last 2h</span></div><div class="font-code-sm text-code-sm text-text-muted bg-surface-container-low px-space-md py-space-xs rounded-lg border border-border-subtle">prod-agent-cluster-04</div><div class="flex items-center gap-space-xs text-text-disabled font-code-sm text-code-sm"><kbd class="px-space-xs py-0.5 bg-surface-elevated rounded-lg border border-border-subtle text-text-muted">⌘K</kbd><span>palette</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="w-full pt-12 bg-surface-container-low min-h-screen text-text-primary"><div class="flex flex-col w-full p-margin gap-space-lg">
+<!-- Sub-header context ribbon -->
+<div class="flex flex-wrap items-center justify-between gap-space-md bg-surface-elevated/70 px-space-md py-space-sm rounded-lg border border-border-subtle">
+<div class="flex items-center gap-space-md text-text-muted font-body-sm">
+<div class="flex items-center gap-space-xs text-text-primary font-medium">
+<span class="material-symbols-outlined text-[15px] text-primary-container">monetization_on</span>
+<span>Run Unit Economics & Tail Latency</span>
+</div>
+<span class="text-border-contrast">/</span>
+<span class="font-code-sm text-text-muted">run_2026-09-28T14:22</span>
+<span class="text-border-contrast">/</span>
+<span class="text-text-disabled">SLO window: rolling 24h</span>
+</div>
+<div class="flex items-center gap-space-sm font-code-sm">
+<span class="text-text-muted">Total Run Spend:</span>
+<span class="text-text-primary font-semibold">€0.1089</span>
+<span class="text-text-disabled">·</span>
+<span class="text-status-error font-medium">38% waste via retries</span>
+</div>
+</div>
+<!-- Top 4 Stat Tiles -->
+<section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-space-md">
+<!-- Tile 1 -->
+<div class="bg-surface-elevated rounded-lg p-space-md border border-border-subtle flex flex-col justify-between">
+<div class="flex items-center justify-between text-text-muted font-label-md uppercase tracking-wider">
+<span>Cost / session (median)</span>
+<span class="material-symbols-outlined text-[15px] text-text-disabled">query_stats</span>
+</div>
+<div class="my-space-xs">
+<span class="font-code-num text-headline-xl text-text-primary">€0.0031</span>
+</div>
+<div class="font-body-sm text-text-muted flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[13px] text-text-disabled">all_inclusive</span>
+<span>all 30 tasks in run</span>
+</div>
+</div>
+<!-- Tile 2: Visually Emphasized -->
+<div class="bg-primary-container/20 rounded-lg p-space-md border border-primary-container flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between text-primary font-label-md uppercase tracking-wider font-semibold">
+<div class="flex items-center gap-space-xs">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container animate-pulse"></span>
+<span>Cost / successful session</span>
+</div>
+<span class="font-code-sm bg-primary-container/30 px-space-xs py-0.2 rounded text-text-primary">TARGET</span>
+</div>
+<div class="my-space-xs">
+<span class="font-code-num text-headline-xl text-primary font-bold">€0.0024</span>
+</div>
+<div class="font-body-sm text-on-surface flex items-center justify-between">
+<span>24 passed sessions</span>
+<span class="font-code-sm text-status-pass font-medium">22.5% lower than median</span>
+</div>
+</div>
+<!-- Tile 3 -->
+<div class="bg-surface-elevated rounded-lg p-space-md border border-border-subtle flex flex-col justify-between">
+<div class="flex items-center justify-between text-text-muted font-label-md uppercase tracking-wider">
+<span>p50 latency</span>
+<span class="material-symbols-outlined text-[15px] text-text-disabled">timer</span>
+</div>
+<div class="my-space-xs">
+<span class="font-code-num text-headline-xl text-text-primary">1.42s</span>
+</div>
+<div class="font-body-sm text-text-muted flex items-center gap-space-xs">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-status-pass"></span>
+<span>target SLO < 2.0s</span>
+</div>
+</div>
+<!-- Tile 4 -->
+<div class="bg-surface-elevated rounded-lg p-space-md border border-border-subtle flex flex-col justify-between">
+<div class="flex items-center justify-between text-text-muted font-label-md uppercase tracking-wider">
+<span>p95 latency</span>
+<span class="material-symbols-outlined text-[15px] text-status-warning">speed</span>
+</div>
+<div class="my-space-xs">
+<span class="font-code-num text-headline-xl text-status-warning">4.82s</span>
+</div>
+<div class="font-body-sm text-status-warning/90 flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[13px]">warning</span>
+<span>driven by 6 retry cascades</span>
+</div>
+</div>
+</section>
+<!-- Middle Section: Two Charts Side-by-Side -->
+<section class="grid grid-cols-1 xl:grid-cols-2 gap-space-md">
+<!-- Chart A: Cost Distribution Histogram -->
+<div class="bg-surface-elevated rounded-lg p-space-md border border-border-subtle flex flex-col">
+<div class="flex items-center justify-between pb-space-sm border-b border-border-subtle">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-primary">bar_chart</span>
+<h2 class="font-headline-md text-headline-md text-text-primary">Cost Distribution Histogram</h2>
+</div>
+<span class="font-body-sm text-text-muted mt-0.5">Tail analysis across 30 tasks with passed vs failed segmentation</span>
+</div>
+<div class="flex items-center gap-space-md font-code-sm text-text-muted">
+<span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-status-pass"></span> Passed</span>
+<span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-status-error"></span> Failed Tail</span>
+</div>
+</div>
+<!-- Histogram Graphic -->
+<div class="relative mt-space-md pt-2">
+<!-- Vertical Marker: Median €0.0031 (~42% from left) -->
+<div class="absolute top-0 bottom-7 left-[42%] z-10 flex flex-col items-center pointer-events-none">
+<span class="font-code-sm text-[10px] text-text-primary bg-surface px-1 py-0.5 rounded border border-border-contrast shadow-sm whitespace-nowrap">Median €0.0031</span>
+<div class="w-px h-full border-l border-dashed border-text-muted/60 mt-0.5"></div>
+</div>
+<!-- Vertical Marker: p95 €0.0076 (~86% from left) -->
+<div class="absolute top-0 bottom-7 left-[86%] z-10 flex flex-col items-center pointer-events-none">
+<span class="font-code-sm text-[10px] text-status-warning bg-surface px-1 py-0.5 rounded border border-status-warning/40 shadow-sm whitespace-nowrap">p95 €0.0076</span>
+<div class="w-px h-full border-l border-dashed border-status-warning/70 mt-0.5"></div>
+</div>
+<!-- Grid Lines & Chart Area -->
+<div class="h-44 w-full flex items-end justify-between gap-2 border-b border-border-subtle px-1 pb-1 relative">
+<!-- Background reference grid lines -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-20">
+<div class="w-full border-b border-text-muted"></div>
+<div class="w-full border-b border-text-muted"></div>
+<div class="w-full border-b border-text-muted"></div>
+<div class="w-full border-b border-text-muted"></div>
+</div>
+<!-- Bucket 1: €0.000-0.001 (2 passed) -->
+<div class="flex-1 flex flex-col items-center justify-end h-full group relative">
+<span class="opacity-0 group-hover:opacity-100 absolute -top-5 font-code-sm text-text-primary bg-surface-container px-1 py-0.5 rounded border border-border-subtle transition-opacity">2 tasks</span>
+<div class="w-full max-w-[34px] bg-status-pass rounded-t-sm transition-all group-hover:brightness-125" style="height: 18%;"></div>
+</div>
+<!-- Bucket 2: €0.001-0.002 (6 passed) -->
+<div class="flex-1 flex flex-col items-center justify-end h-full group relative">
+<span class="opacity-0 group-hover:opacity-100 absolute -top-5 font-code-sm text-text-primary bg-surface-container px-1 py-0.5 rounded border border-border-subtle transition-opacity">6 tasks</span>
+<div class="w-full max-w-[34px] bg-status-pass rounded-t-sm transition-all group-hover:brightness-125" style="height: 52%;"></div>
+</div>
+<!-- Bucket 3: €0.002-0.003 (11 passed) -->
+<div class="flex-1 flex flex-col items-center justify-end h-full group relative">
+<span class="opacity-0 group-hover:opacity-100 absolute -top-5 font-code-sm text-text-primary bg-surface-container px-1 py-0.5 rounded border border-border-subtle transition-opacity">11 tasks</span>
+<div class="w-full max-w-[34px] bg-status-pass rounded-t-sm transition-all group-hover:brightness-125" style="height: 96%;"></div>
+</div>
+<!-- Bucket 4: €0.003-0.004 (5 passed) -->
+<div class="flex-1 flex flex-col items-center justify-end h-full group relative">
+<span class="opacity-0 group-hover:opacity-100 absolute -top-5 font-code-sm text-text-primary bg-surface-container px-1 py-0.5 rounded border border-border-subtle transition-opacity">5 tasks</span>
+<div class="w-full max-w-[34px] bg-status-pass rounded-t-sm transition-all group-hover:brightness-125" style="height: 44%;"></div>
+</div>
+<!-- Bucket 5: €0.004-0.006 (2 failed) -->
+<div class="flex-1 flex flex-col items-center justify-end h-full group relative">
+<span class="opacity-0 group-hover:opacity-100 absolute -top-5 font-code-sm text-text-primary bg-surface-container px-1 py-0.5 rounded border border-border-subtle transition-opacity">2 failed</span>
+<div class="w-full max-w-[34px] bg-status-error rounded-t-sm transition-all group-hover:brightness-125" style="height: 20%;"></div>
+</div>
+<!-- Bucket 6: €0.006-0.008 (3 failed) -->
+<div class="flex-1 flex flex-col items-center justify-end h-full group relative">
+<span class="opacity-0 group-hover:opacity-100 absolute -top-5 font-code-sm text-text-primary bg-surface-container px-1 py-0.5 rounded border border-border-subtle transition-opacity">3 failed</span>
+<div class="w-full max-w-[34px] bg-status-error rounded-t-sm transition-all group-hover:brightness-125" style="height: 28%;"></div>
+</div>
+<!-- Bucket 7: €0.008+ (1 failed tail anomaly) -->
+<div class="flex-1 flex flex-col items-center justify-end h-full group relative">
+<span class="opacity-0 group-hover:opacity-100 absolute -top-5 font-code-sm text-status-error bg-surface-container px-1 py-0.5 rounded border border-status-error/40 transition-opacity">1 tail</span>
+<div class="w-full max-w-[34px] bg-status-error rounded-t-sm transition-all group-hover:brightness-125" style="height: 12%;"></div>
+</div>
+</div>
+<!-- Monospace X-Axis labels -->
+<div class="flex justify-between pt-1.5 font-code-sm text-text-muted text-[10px]">
+<span class="flex-1 text-center">0-1m€</span>
+<span class="flex-1 text-center">1-2m€</span>
+<span class="flex-1 text-center">2-3m€</span>
+<span class="flex-1 text-center">3-4m€</span>
+<span class="flex-1 text-center">4-6m€</span>
+<span class="flex-1 text-center">6-8m€</span>
+<span class="flex-1 text-center">>8m€</span>
+</div>
+</div>
+<!-- Quick insight badge -->
+<div class="mt-space-md pt-space-xs border-t border-border-subtle flex items-center justify-between text-body-sm text-text-muted">
+<span>Tail divergence: 100% of tasks costing >€0.004 resulted in terminal errors.</span>
+<span class="font-code-sm text-status-error">Heavy Tail Loss: €0.0249</span>
+</div>
+</div>
+<!-- Chart B: Total Cost Breakdown by Span Type -->
+<div class="bg-surface-elevated rounded-lg p-space-md border border-border-subtle flex flex-col">
+<div class="flex items-center justify-between pb-space-sm border-b border-border-subtle">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-secondary">pie_chart</span>
+<h2 class="font-headline-md text-headline-md text-text-primary">Cost Breakdown by Span Type</h2>
+</div>
+<span class="font-body-sm text-text-muted mt-0.5">Execution overhead across 30 sessions (€0.1089 total)</span>
+</div>
+<span class="font-code-sm text-status-warning bg-status-warning/10 border border-status-warning/30 px-space-xs py-0.5 rounded">38% retry waste</span>
+</div>
+<!-- Stacked Bar Visual -->
+<div class="my-space-md">
+<div class="w-full h-5 rounded overflow-hidden flex bg-surface-container">
+<div class="bg-[#7D6AFA] h-full" style="width: 14%;" title="Planning: 14%"></div>
+<div class="bg-[#1496FF] h-full" style="width: 41%;" title="Synthesis: 41%"></div>
+<div class="bg-[#DA7288] h-full relative" style="width: 38%;" title="Critique-Loop Retries: 38%">
+<div class="absolute inset-0 bg-[repeating-linear-gradient(45deg,transparent,transparent_4px,rgba(0,0,0,0.25)_4px,rgba(0,0,0,0.25)_8px)]"></div>
+</div>
+<div class="bg-[#47AE8F] h-full" style="width: 7%;" title="Tool & Retrieval: 7%"></div>
+</div>
+<div class="flex justify-between items-center mt-1.5 font-code-sm text-[11px] text-text-muted">
+<span class="text-[#7D6AFA]">Plan 14%</span>
+<span class="text-[#1496FF]">Synth 41%</span>
+<span class="text-[#DA7288] font-medium">Critique Retries 38% (Waste)</span>
+<span class="text-[#47AE8F]">Tool 7%</span>
+</div>
+</div>
+<!-- Monospace Span Metric Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left font-code-sm text-code-sm">
+<thead>
+<tr class="text-text-muted font-label-md text-label-md uppercase border-b border-border-subtle">
+<th class="py-1">Span Type</th>
+<th class="py-1 text-right">Cost</th>
+<th class="py-1 text-right">Tokens</th>
+<th class="py-1 text-right">Contrib</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-subtle/50">
+<tr class="hover:bg-surface-hover/50">
+<td class="py-1.5 flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-[#7D6AFA]"></span>
+<span class="text-text-primary">Planning</span>
+</td>
+<td class="py-1.5 text-right font-code-num text-text-primary">€0.0152</td>
+<td class="py-1.5 text-right font-code-num text-text-muted">18,240</td>
+<td class="py-1.5 text-right font-code-num text-text-muted">14.0%</td>
+</tr>
+<tr class="hover:bg-surface-hover/50">
+<td class="py-1.5 flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-[#1496FF]"></span>
+<span class="text-text-primary">Synthesis</span>
+</td>
+<td class="py-1.5 text-right font-code-num text-text-primary">€0.0447</td>
+<td class="py-1.5 text-right font-code-num text-text-muted">53,640</td>
+<td class="py-1.5 text-right font-code-num text-text-muted">41.0%</td>
+</tr>
+<tr class="hover:bg-status-error/10 bg-status-error/5">
+<td class="py-1.5 flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-[#DA7288]"></span>
+<span class="text-status-error font-medium">Critique Retries</span>
+<span class="text-[10px] text-status-error bg-status-error/20 px-1 py-0.2 rounded font-sans uppercase">Waste</span>
+</td>
+<td class="py-1.5 text-right font-code-num text-status-error font-semibold">€0.0414</td>
+<td class="py-1.5 text-right font-code-num text-status-error">49,680</td>
+<td class="py-1.5 text-right font-code-num text-status-error font-semibold">38.0%</td>
+</tr>
+<tr class="hover:bg-surface-hover/50">
+<td class="py-1.5 flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-[#47AE8F]"></span>
+<span class="text-text-primary">Tool & Retrieval</span>
+</td>
+<td class="py-1.5 text-right font-code-num text-text-primary">€0.0076</td>
+<td class="py-1.5 text-right font-code-num text-text-muted">9,120</td>
+<td class="py-1.5 text-right font-code-num text-text-muted">7.0%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<!-- Bottom Section: Most Expensive Sessions Table -->
+<section class="bg-surface-elevated rounded-lg border border-border-subtle overflow-hidden">
+<div class="px-space-md py-space-sm border-b border-border-subtle flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-text-muted">receipt_long</span>
+<h3 class="font-headline-md text-headline-md text-text-primary">Most expensive sessions</h3>
+<span class="text-text-muted font-body-sm">(sorted by cost descending)</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="font-code-sm text-text-disabled">Showing top 6 outlier traces</span>
+<button class="bg-surface-container-low hover:bg-surface-hover px-2 py-1 rounded text-text-muted hover:text-text-primary font-body-sm border border-border-subtle transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">tune</span>
+<span>Filter</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left font-body-sm">
+<thead>
+<tr class="bg-surface-container/60 border-b border-border-subtle font-label-md text-label-md text-text-muted uppercase tracking-wider">
+<th class="py-2 px-space-md">Task ID</th>
+<th class="py-2 px-space-md">Status</th>
+<th class="py-2 px-space-md text-right">Cost</th>
+<th class="py-2 px-space-md text-right">Duration</th>
+<th class="py-2 px-space-md text-right">Spans</th>
+<th class="py-2 px-space-md">Dominant Failure / Primary Driver</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-subtle">
+<!-- Row 1: FAILED-BUT-EXPENSIVE -->
+<tr class="bg-status-error/10 border-l-2 border-[#DA7288] hover:bg-status-error/15 transition-colors">
+<td class="py-2 px-space-md font-code-md text-code-md text-text-primary font-medium flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-status-error">emergency</span>
+<span>task_fx_008_plan</span>
+</td>
+<td class="py-2 px-space-md">
+<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded font-code-sm text-[10px] bg-status-error/20 text-status-error border border-status-error/40 font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-status-error"></span>
+                Failed
+              </span>
+</td>
+<td class="py-2 px-space-md text-right font-code-num text-code-num text-status-error font-semibold">€0.0079</td>
+<td class="py-2 px-space-md text-right font-code-num text-code-num text-text-primary">8,410ms</td>
+<td class="py-2 px-space-md text-right font-code-num text-code-num text-text-muted">28 spans</td>
+<td class="py-2 px-space-md text-status-error/95 font-body-sm flex items-center justify-between">
+<span>Orchestration loop limit (3 retries)</span>
+<span class="material-symbols-outlined text-[15px] text-status-error opacity-70">open_in_new</span>
+</td>
+</tr>
+<!-- Row 2: FAILED-BUT-EXPENSIVE -->
+<tr class="bg-status-error/10 border-l-2 border-[#DA7288] hover:bg-status-error/15 transition-colors">
+<td class="py-2 px-space-md font-code-md text-code-md text-text-primary font-medium flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-status-error">emergency</span>
+<span>task_fx_029_eval</span>
+</td>
+<td class="py-2 px-space-md">
+<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded font-code-sm text-[10px] bg-status-error/20 text-status-error border border-status-error/40 font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-status-error"></span>
+                Failed
+              </span>
+</td>
+<td class="py-2 px-space-md text-right font-code-num text-code-num text-status-error font-semibold">€0.0055</td>
+<td class="py-2 px-space-md text-right font-code-num text-code-num text-text-primary">5,120ms</td>
+<td class="py-2 px-space-md text-right font-code-num text-code-num text-text-muted">19 spans</td>
+<td class="py-2 px-space-md text-status-error/95 font-body-sm flex items-center justify-between">
+<span>Context window overflow in eval</span>
+<span class="material-symbols-outlined text-[15px] text-status-error opacity-70">open_in_new</span>
+</td>
+</tr>
+<!-- Row 3: FAILED-BUT-EXPENSIVE -->
+<tr class="bg-status-error/10 border-l-2 border-[#DA7288] hover:bg-status-error/15 transition-colors">
+<td class="py-2 px-space-md font-code-md text-code-md text-text-primary font-medium flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-status-error">emergency</span>
+<span>task_fx_014_run2</span>
+</td>
+<td class="py-2 px-space-md">
+<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded font-code-sm text-[10px] bg-status-error/20 text-status-error border border-status-error/40 font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-status-error"></span>
+                Failed
+              </span>
+</td>
+<td class="py-2 px-space-md text-right font-code-num text-code-num text-status-error font-semibold">€0.0042</td>
+<td class="py-2 px-space-md text-right font-code-num text-code-num text-text-primary">4,820ms</td>
+<td class="py-2 px-space-md text-right font-code-num text-code-num text-text-muted">14 spans</td>
+<td class="py-2 px-space-md text-status-error/95 font-body-sm flex items-center justify-between">
+<span>tool.sql_client timeout</span>
+<span class="material-symbols-outlined text-[15px] text-status-error opacity-70">open_in_new</span>
+</td>
+</tr>
+<!-- Row 4: PASSED -->
+<tr class="hover:bg-surface-hover transition-colors">
+<td class="py-2 px-space-md font-code-md text-code-md text-text-primary flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-status-pass">check_circle</span>
+<span>task_fx_003_synth</span>
+</td>
+<td class="py-2 px-space-md">
+<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded font-code-sm text-[10px] bg-status-pass/20 text-status-pass border border-status-pass/40 font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-status-pass"></span>
+                Passed
+              </span>
+</td>
+<td class="py-2 px-space-md text-right font-code-num text-code-num text-text-primary">€0.0038</td>
+<td class="py-2 px-space-md text-right font-code-num text-code-num text-text-muted">3,920ms</td>
+<td class="py-2 px-space-md text-right font-code-num text-code-num text-text-muted">12 spans</td>
+<td class="py-2 px-space-md text-text-muted font-body-sm flex items-center justify-between">
+<span>Normal completion (large output)</span>
+<span class="material-symbols-outlined text-[15px] text-text-disabled hover:text-text-muted">open_in_new</span>
+</td>
+</tr>
+<!-- Row 5: PASSED -->
+<tr class="hover:bg-surface-hover transition-colors">
+<td class="py-2 px-space-md font-code-md text-code-md text-text-primary flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-status-pass">check_circle</span>
+<span>task_fx_017_route</span>
+</td>
+<td class="py-2 px-space-md">
+<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded font-code-sm text-[10px] bg-status-pass/20 text-status-pass border border-status-pass/40 font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-status-pass"></span>
+                Passed
+              </span>
+</td>
+<td class="py-2 px-space-md text-right font-code-num text-code-num text-text-primary">€0.0031</td>
+<td class="py-2 px-space-md text-right font-code-num text-code-num text-text-muted">2,440ms</td>
+<td class="py-2 px-space-md text-right font-code-num text-code-num text-text-muted">8 spans</td>
+<td class="py-2 px-space-md text-text-muted font-body-sm flex items-center justify-between">
+<span>Normal completion</span>
+<span class="material-symbols-outlined text-[15px] text-text-disabled hover:text-text-muted">open_in_new</span>
+</td>
+</tr>
+<!-- Row 6: PASSED -->
+<tr class="hover:bg-surface-hover transition-colors">
+<td class="py-2 px-space-md font-code-md text-code-md text-text-primary flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-status-pass">check_circle</span>
+<span>task_fx_012_search</span>
+</td>
+<td class="py-2 px-space-md">
+<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded font-code-sm text-[10px] bg-status-pass/20 text-status-pass border border-status-pass/40 font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-status-pass"></span>
+                Passed
+              </span>
+</td>
+<td class="py-2 px-space-md text-right font-code-num text-code-num text-text-primary">€0.0028</td>
+<td class="py-2 px-space-md text-right font-code-num text-code-num text-text-muted">1,890ms</td>
+<td class="py-2 px-space-md text-right font-code-num text-code-num text-text-muted">7 spans</td>
+<td class="py-2 px-space-md text-text-muted font-body-sm flex items-center justify-between">
+<span>Normal completion</span>
+<span class="material-symbols-outlined text-[15px] text-text-disabled hover:text-text-muted">open_in_new</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Footnote line -->
+<div class="px-space-md py-space-sm bg-surface-container/30 border-t border-border-subtle flex items-center justify-between text-text-muted font-body-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[14px] text-text-disabled">info</span>
+<span>Evaluation calls are traced separately and excluded from session cost.</span>
+</div>
+<span class="font-code-sm text-text-disabled">Currency: EUR (€) · ISO 4217</span>
+</div>
+</section>
+</div></main></div></body></html>

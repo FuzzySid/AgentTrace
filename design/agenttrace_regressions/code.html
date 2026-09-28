@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"error":"#ffb4ab","secondary":"#c7bfff","on-secondary-container":"#b8afff","secondary-fixed":"#e5deff","outline-variant":"#404753","status-warning":"#E9B86E","background":"#111124","surface-container-high":"#28283c","tertiary-container":"#e47500","surface-container-low":"#1a1a2d","secondary-fixed-dim":"#c7bfff","primary-fixed-dim":"#a2c9ff","surface-container-lowest":"#0c0c1f","on-error-container":"#ffdad6","on-surface":"#e2e0fb","border-contrast":"#42425E","surface":"#111124","outline":"#8a919e","on-background":"#e2e0fb","on-primary-fixed-variant":"#004881","text-muted":"#A0A1C0","shell-bg":"#141419","surface-elevated":"#212135","on-tertiary-container":"#492100","status-pass":"#47AE8F","on-tertiary-fixed-variant":"#713700","primary-container":"#1496ff","primary":"#a2c9ff","on-secondary-fixed":"#180065","surface-hover":"#2A2A42","on-tertiary":"#4f2500","on-primary-fixed":"#001c38","border-subtle":"#323248","tertiary":"#ffb784","status-error":"#DA7288","on-error":"#690005","on-surface-variant":"#bfc7d5","on-secondary-fixed-variant":"#4226bd","text-primary":"#F0F0F5","on-tertiary-fixed":"#301400","surface-container":"#1e1e31","on-primary":"#00315b","surface-bright":"#38374c","on-secondary":"#2b009e","primary-fixed":"#d3e4ff","on-primary-container":"#002d53","inverse-surface":"#e2e0fb","secondary-container":"#442ac0","tertiary-fixed":"#ffdcc6","surface-variant":"#333347","text-disabled":"#686985","tertiary-fixed-dim":"#ffb784","inverse-primary":"#0060a8","surface-dim":"#111124","error-container":"#93000a","surface-container-highest":"#333347","surface-tint":"#a2c9ff","inverse-on-surface":"#2f2e43"},borderRadius:{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},spacing:{"margin":"0.75rem","space-sm":"0.375rem","space-xs":"0.25rem","space-lg":"0.75rem","gutter":"0.5rem","space-md":"0.5rem","space-xl":"1rem"},fontFamily:{"label-md":["Inter"],"code-num":["JetBrains Mono"],"headline-xl":["Inter"],"headline-md":["Inter"],"body-sm":["Inter"],"code-md":["JetBrains Mono"],"code-sm":["JetBrains Mono"],"headline-lg":["Inter"],"body-md":["Inter"]},fontSize:{"label-md":["11px",{"lineHeight":"14px","letterSpacing":"0.01em","fontWeight":"500"}],"code-num":["11px",{"lineHeight":"14px","fontWeight":"500"}],"headline-xl":["20px",{"lineHeight":"26px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-md":["14px",{"lineHeight":"18px","letterSpacing":"-0.005em","fontWeight":"600"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"code-md":["12px",{"lineHeight":"16px","fontWeight":"400"}],"code-sm":["11px",{"lineHeight":"14px","fontWeight":"400"}],"headline-lg":["16px",{"lineHeight":"22px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-md":["13px",{"lineHeight":"18px","fontWeight":"400"}]}}}}</script></head><body class="bg-surface-container-low font-body-sm text-text-primary antialiased min-h-screen selection:bg-primary-container selection:text-text-primary"><aside class="fixed left-0 top-0 h-full w-[200px] bg-shell-bg z-50 flex flex-col justify-between p-margin border-r border-border-subtle"><div class="flex flex-col gap-space-lg"><div class="flex items-center gap-space-md pb-space-sm border-b border-border-subtle"><img alt="AgentTrace Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1U5a-OYtYuTzmoYG7f1hb7fK9Rlpy4zHjXdPs1GRmfRXnqSf2pvW_foVsUM6bV4LSTzH_Ty7Cqf6TUm171qDC1ezBAu7olAK2jEX8Ys94H-Xs-1B2OYv772sQi3RBda0NujRnD-QTAfWeWj3JnffAMdesNDHzRJE5v7ZQEi3A51WuDAbttrdo56RvUwiqehTyjVD7acD7vzQfeJYIpy8lYDOEZy8jpuvTDJ2kPdlHK7YT7etW7QYSt9"/><span class="font-code-md text-code-md font-semibold tracking-tight text-text-primary">AgentTrace</span></div><nav class="flex flex-col gap-space-xs" data-active-classes="bg-surface-elevated text-primary font-medium border border-border-subtle"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-text-muted hover:bg-surface-elevated hover:text-text-primary transition-colors font-body-sm text-body-sm" data-path="traces" href="#"><span class="material-symbols-outlined text-[16px]">account_tree</span><span>Traces</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-text-muted hover:bg-surface-elevated hover:text-text-primary transition-colors font-body-sm text-body-sm" data-path="cost" href="#"><span class="material-symbols-outlined text-[16px]">payments</span><span>Cost</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg transition-colors bg-surface-elevated text-primary font-medium border border-border-subtle" data-path="regressions" href="#"><span class="material-symbols-outlined text-[16px]">compare_arrows</span><span>Regressions</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-text-muted hover:bg-surface-elevated hover:text-text-primary transition-colors font-body-sm text-body-sm" data-path="telemetry" href="#"><span class="material-symbols-outlined text-[16px]">monitoring</span><span>Telemetry</span></a></nav></div><div class="font-code-sm text-code-sm text-text-muted bg-surface-container-low px-space-md py-space-xs rounded-lg border border-border-subtle flex items-center justify-between"><span class="text-text-disabled">tier:</span><span class="text-primary font-medium">attrs</span></div></aside><div class="pl-[200px] flex flex-col min-h-screen"><header class="fixed top-0 left-[200px] right-0 h-12 bg-shell-bg border-b border-border-subtle px-margin z-40 flex items-center justify-between font-body-sm text-body-sm"><div class="flex items-center gap-space-md"><img alt="AgentTrace Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1U5a-OYtYuTzmoYG7f1hb7fK9Rlpy4zHjXdPs1GRmfRXnqSf2pvW_foVsUM6bV4LSTzH_Ty7Cqf6TUm171qDC1ezBAu7olAK2jEX8Ys94H-Xs-1B2OYv772sQi3RBda0NujRnD-QTAfWeWj3JnffAMdesNDHzRJE5v7ZQEi3A51WuDAbttrdo56RvUwiqehTyjVD7acD7vzQfeJYIpy8lYDOEZy8jpuvTDJ2kPdlHK7YT7etW7QYSt9"/><div class="flex items-center gap-space-xs bg-surface-elevated px-space-md py-space-xs rounded-lg border border-border-subtle cursor-pointer hover:border-border-contrast transition-colors"><span class="font-code-sm text-code-sm text-text-primary font-medium">run_2026-09-28T14:22</span><span class="material-symbols-outlined text-[14px] text-text-muted">expand_more</span></div><span class="text-text-muted font-body-sm text-body-sm">· 30 tasks</span><span class="font-code-sm text-code-sm text-primary bg-primary-container/15 border border-primary/30 px-space-sm py-0.5 rounded-lg">attrs</span><div class="flex items-center gap-space-xs font-code-sm text-code-sm ml-space-xs"><span class="inline-block w-1.5 h-1.5 rounded-full bg-status-pass"></span><span class="text-status-pass">24 passed</span><span class="text-text-disabled">·</span><span class="inline-block w-1.5 h-1.5 rounded-full bg-status-error"></span><span class="text-status-error">6 failed</span></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs bg-surface-elevated px-space-md py-space-xs rounded-lg border border-border-subtle cursor-pointer text-text-muted hover:text-text-primary hover:border-border-contrast transition-colors"><span class="material-symbols-outlined text-[14px]">schedule</span><span class="font-body-sm text-body-sm">Last 2h</span></div><div class="font-code-sm text-code-sm text-text-muted bg-surface-container-low px-space-md py-space-xs rounded-lg border border-border-subtle">prod-agent-cluster-04</div><div class="flex items-center gap-space-xs text-text-disabled font-code-sm text-code-sm"><kbd class="px-space-xs py-0.5 bg-surface-elevated rounded-lg border border-border-subtle text-text-muted">⌘K</kbd><span>palette</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="w-full pt-12 bg-surface-container-low min-h-screen text-text-primary"><div class="flex flex-col w-full">
+<div class="p-space-lg flex flex-col gap-space-lg">
+<!-- Top Run Comparator Dual Panel -->
+<div class="bg-surface-elevated rounded-xl p-space-lg flex flex-col gap-space-md shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[18px]">compare_arrows</span>
+<span class="font-headline-md text-headline-md text-text-primary">Run Differential Matrix</span>
+<span class="font-code-sm text-code-sm px-space-sm py-0.5 rounded-lg bg-surface-container-high text-text-muted">A/B Benchmark</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="bg-surface-container-high hover:bg-surface-hover text-text-muted hover:text-text-primary px-space-md py-1 rounded-lg font-label-md text-label-md transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">tune</span>
+<span>Thresholds: strict</span>
+</button>
+<button class="bg-surface-container-high hover:bg-surface-hover text-text-muted hover:text-text-primary px-space-md py-1 rounded-lg font-label-md text-label-md transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">file_download</span>
+<span>Export Diff CSV</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-space-md relative">
+<!-- Center VS Badge for Desktop -->
+<div class="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-7 h-7 rounded-full bg-surface-container-lowest text-text-muted font-code-sm text-code-sm font-semibold items-center justify-center shadow-md">
+          vs
+        </div>
+<!-- Baseline Run Card -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md uppercase tracking-wider text-text-muted">Baseline Run</span>
+<span class="font-code-sm text-code-sm text-status-pass bg-status-pass/10 px-space-xs py-0.5 rounded-lg">Target Baseline</span>
+</div>
+<div class="flex items-center justify-between gap-space-sm bg-surface-elevated px-space-md py-1.5 rounded-lg cursor-pointer hover:bg-surface-hover transition-colors">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[15px] text-text-disabled">history</span>
+<span class="font-code-md text-code-md text-text-primary font-medium">run_2026-09-21T09:15</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-text-muted">unfold_more</span>
+</div>
+<div class="flex flex-wrap items-center gap-space-xs">
+<span class="font-code-sm text-code-sm px-space-sm py-0.5 rounded bg-surface-container-high text-primary">v1-verbose</span>
+<span class="font-code-sm text-code-sm px-space-sm py-0.5 rounded bg-surface-container-high text-secondary">mid</span>
+<span class="font-code-sm text-code-sm text-text-disabled">model tier: gpt-4o-mini</span>
+</div>
+<div class="flex items-center justify-between pt-space-xs font-body-sm text-body-sm text-text-muted">
+<span>30 tasks total</span>
+<div class="flex items-center gap-space-xs font-code-sm text-code-sm">
+<span class="text-status-pass font-medium">28 passed</span>
+<span class="text-text-disabled">·</span>
+<span class="text-status-error font-medium">2 failed</span>
+<span class="text-text-disabled">(6.7% fail rate)</span>
+</div>
+</div>
+</div>
+<!-- Candidate Run Card -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md uppercase tracking-wider text-text-muted">Candidate Run (Active)</span>
+<span class="font-code-sm text-code-sm text-status-warning bg-status-warning/10 px-space-xs py-0.5 rounded-lg">Evaluation Target</span>
+</div>
+<div class="flex items-center justify-between gap-space-sm bg-surface-elevated px-space-md py-1.5 rounded-lg cursor-pointer hover:bg-surface-hover transition-colors">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[15px] text-primary">play_circle</span>
+<span class="font-code-md text-code-md text-text-primary font-medium">run_2026-09-28T14:22</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-text-muted">unfold_more</span>
+</div>
+<div class="flex flex-wrap items-center gap-space-xs">
+<span class="font-code-sm text-code-sm px-space-sm py-0.5 rounded bg-surface-container-high text-tertiary">v3-terse</span>
+<span class="font-code-sm text-code-sm px-space-sm py-0.5 rounded bg-surface-container-high text-secondary">cheap</span>
+<span class="font-code-sm text-code-sm text-text-disabled">model tier: claude-3-haiku</span>
+</div>
+<div class="flex items-center justify-between pt-space-xs font-body-sm text-body-sm text-text-muted">
+<span>30 tasks total</span>
+<div class="flex items-center gap-space-xs font-code-sm text-code-sm">
+<span class="text-status-pass font-medium">24 passed</span>
+<span class="text-text-disabled">·</span>
+<span class="text-status-error font-medium">6 failed</span>
+<span class="text-status-error font-semibold">(20.0% fail rate)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Comparative Metrics Triple Banner -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<!-- Tile 1: Failure Rate -->
+<div class="bg-surface-elevated rounded-xl p-space-md flex flex-col justify-between shadow-sm relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md uppercase tracking-wider text-text-muted">Failure Rate</span>
+<span class="font-code-sm text-code-sm text-status-error font-semibold flex items-center bg-status-error/10 px-1.5 py-0.5 rounded-lg">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span>
+            +13.3%
+          </span>
+</div>
+<div class="flex items-baseline justify-between mt-space-sm">
+<div class="flex flex-col">
+<span class="font-code-sm text-code-sm text-text-disabled uppercase">Baseline</span>
+<span class="font-code-md text-headline-md text-text-muted">6.7%</span>
+</div>
+<span class="material-symbols-outlined text-[18px] text-text-disabled">east</span>
+<div class="flex flex-col items-end">
+<span class="font-code-sm text-code-sm text-status-error uppercase">Candidate</span>
+<span class="font-code-md text-headline-xl text-status-error font-semibold">20.0%</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-high h-1 rounded-full mt-space-md overflow-hidden flex">
+<div class="bg-text-disabled h-full" style="width: 33%"></div>
+<div class="bg-status-error h-full" style="width: 67%"></div>
+</div>
+</div>
+<!-- Tile 2: Cost per Successful Session -->
+<div class="bg-surface-elevated rounded-xl p-space-md flex flex-col justify-between shadow-sm relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md uppercase tracking-wider text-text-muted">Cost / Success Session</span>
+<span class="font-code-sm text-code-sm text-status-pass font-semibold flex items-center bg-status-pass/10 px-1.5 py-0.5 rounded-lg">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span>
+            -50.0%
+          </span>
+</div>
+<div class="flex items-baseline justify-between mt-space-sm">
+<div class="flex flex-col">
+<span class="font-code-sm text-code-sm text-text-disabled uppercase">Baseline</span>
+<span class="font-code-md text-headline-md text-text-muted">€0.0048</span>
+</div>
+<span class="material-symbols-outlined text-[18px] text-text-disabled">east</span>
+<div class="flex flex-col items-end">
+<span class="font-code-sm text-code-sm text-status-pass uppercase">Candidate</span>
+<span class="font-code-md text-headline-xl text-status-pass font-semibold">€0.0024</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-high h-1 rounded-full mt-space-md overflow-hidden flex">
+<div class="bg-status-pass h-full" style="width: 50%"></div>
+</div>
+</div>
+<!-- Tile 3: p95 Latency -->
+<div class="bg-surface-elevated rounded-xl p-space-md flex flex-col justify-between shadow-sm relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md uppercase tracking-wider text-text-muted">p95 Latency</span>
+<span class="font-code-sm text-code-sm text-status-error font-semibold flex items-center bg-status-error/10 px-1.5 py-0.5 rounded-lg">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span>
+            +1.72s
+          </span>
+</div>
+<div class="flex items-baseline justify-between mt-space-sm">
+<div class="flex flex-col">
+<span class="font-code-sm text-code-sm text-text-disabled uppercase">Baseline</span>
+<span class="font-code-md text-headline-md text-text-muted">3.10s</span>
+</div>
+<span class="material-symbols-outlined text-[18px] text-text-disabled">east</span>
+<div class="flex flex-col items-end">
+<span class="font-code-sm text-code-sm text-status-error uppercase">Candidate</span>
+<span class="font-code-md text-headline-xl text-status-error font-semibold">4.82s</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-high h-1 rounded-full mt-space-md overflow-hidden flex">
+<div class="bg-text-disabled h-full" style="width: 64%"></div>
+<div class="bg-status-error h-full" style="width: 36%"></div>
+</div>
+</div>
+</div>
+<!-- PRIMARY ATTENTION: Newly Failing Tasks Table -->
+<div class="bg-surface-elevated rounded-xl flex flex-col shadow-sm">
+<div class="p-space-lg flex flex-col sm:flex-row sm:items-center justify-between gap-space-xs bg-surface-elevated rounded-t-xl">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-sm">
+<span class="w-2 h-2 rounded-full bg-status-error"></span>
+<h2 class="font-headline-lg text-headline-lg text-text-primary">Newly failing tasks (passed on baseline, failing on candidate)</h2>
+</div>
+<p class="font-body-sm text-body-sm text-text-muted mt-0.5">
+            4 tasks regressed due to candidate prompt/model changes. Immediate triage required.
+          </p>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-code-sm text-code-sm text-status-error bg-status-error/10 px-space-md py-1 rounded-lg font-medium">
+            4 Critical Regressions
+          </span>
+</div>
+</div>
+<!-- Dense Observability Table -->
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead class="bg-surface-container-high text-text-muted font-label-md text-label-md uppercase tracking-wider">
+<tr>
+<th class="py-space-sm px-space-md">Task ID</th>
+<th class="py-space-sm px-space-md">Baseline Status</th>
+<th class="py-space-sm px-space-md">Candidate Status</th>
+<th class="py-space-sm px-space-md">New Failure Category</th>
+<th class="py-space-sm px-space-md">Primary Regressed Span</th>
+<th class="py-space-sm px-space-md text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y-0 text-text-primary">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-hover transition-colors group">
+<td class="py-2 px-space-md font-code-sm text-code-sm font-medium text-text-primary">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-status-error">error</span>
+<span>task_fx_014_run2</span>
+</div>
+</td>
+<td class="py-2 px-space-md">
+<span class="font-code-sm text-code-sm px-space-sm py-0.5 rounded bg-status-pass/10 text-status-pass font-medium">
+                  Passed 1.2s
+                </span>
+</td>
+<td class="py-2 px-space-md">
+<span class="font-code-sm text-code-sm px-space-sm py-0.5 rounded bg-status-error/15 text-status-error font-medium">
+                  Failed 4.8s
+                </span>
+</td>
+<td class="py-2 px-space-md">
+<span class="font-code-sm text-code-sm px-space-sm py-0.5 rounded bg-status-error/10 text-status-error font-medium">
+                  tool
+                </span>
+</td>
+<td class="py-2 px-space-md font-code-sm text-code-sm text-text-muted group-hover:text-text-primary transition-colors">
+                tool.execute.sql_client
+              </td>
+<td class="py-2 px-space-md text-right">
+<a class="font-body-sm text-body-sm text-primary hover:text-primary-fixed-dim inline-flex items-center gap-1 font-medium group-hover:translate-x-0.5 transition-transform" data-path="traces" href="#">
+<span>Investigate in Traces</span>
+<span class="material-symbols-outlined text-[13px]">arrow_forward</span>
+</a>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-hover transition-colors group bg-surface-container-low/40">
+<td class="py-2 px-space-md font-code-sm text-code-sm font-medium text-text-primary">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-status-error">error</span>
+<span>task_fx_021_run1</span>
+</div>
+</td>
+<td class="py-2 px-space-md">
+<span class="font-code-sm text-code-sm px-space-sm py-0.5 rounded bg-status-pass/10 text-status-pass font-medium">
+                  Passed 0.9s
+                </span>
+</td>
+<td class="py-2 px-space-md">
+<span class="font-code-sm text-code-sm px-space-sm py-0.5 rounded bg-status-error/15 text-status-error font-medium">
+                  Failed 2.2s
+                </span>
+</td>
+<td class="py-2 px-space-md">
+<span class="font-code-sm text-code-sm px-space-sm py-0.5 rounded bg-status-error/10 text-status-error font-medium">
+                  retrieval
+                </span>
+</td>
+<td class="py-2 px-space-md font-code-sm text-code-sm text-text-muted group-hover:text-text-primary transition-colors">
+                retrieval.chunk_parser
+              </td>
+<td class="py-2 px-space-md text-right">
+<a class="font-body-sm text-body-sm text-primary hover:text-primary-fixed-dim inline-flex items-center gap-1 font-medium group-hover:translate-x-0.5 transition-transform" data-path="traces" href="#">
+<span>Investigate in Traces</span>
+<span class="material-symbols-outlined text-[13px]">arrow_forward</span>
+</a>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-hover transition-colors group">
+<td class="py-2 px-space-md font-code-sm text-code-sm font-medium text-text-primary">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-status-error">error</span>
+<span>task_fx_008_plan</span>
+</div>
+</td>
+<td class="py-2 px-space-md">
+<span class="font-code-sm text-code-sm px-space-sm py-0.5 rounded bg-status-pass/10 text-status-pass font-medium">
+                  Passed 2.1s
+                </span>
+</td>
+<td class="py-2 px-space-md">
+<span class="font-code-sm text-code-sm px-space-sm py-0.5 rounded bg-status-error/15 text-status-error font-medium">
+                  Failed 8.4s
+                </span>
+</td>
+<td class="py-2 px-space-md">
+<span class="font-code-sm text-code-sm px-space-sm py-0.5 rounded bg-status-error/10 text-status-error font-medium">
+                  orchestration
+                </span>
+</td>
+<td class="py-2 px-space-md font-code-sm text-code-sm text-text-muted group-hover:text-text-primary transition-colors">
+                orchestrator.loop_guard
+              </td>
+<td class="py-2 px-space-md text-right">
+<a class="font-body-sm text-body-sm text-primary hover:text-primary-fixed-dim inline-flex items-center gap-1 font-medium group-hover:translate-x-0.5 transition-transform" data-path="traces" href="#">
+<span>Investigate in Traces</span>
+<span class="material-symbols-outlined text-[13px]">arrow_forward</span>
+</a>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-hover transition-colors group bg-surface-container-low/40">
+<td class="py-2 px-space-md font-code-sm text-code-sm font-medium text-text-primary">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-status-error">error</span>
+<span>task_fx_029_eval</span>
+</div>
+</td>
+<td class="py-2 px-space-md">
+<span class="font-code-sm text-code-sm px-space-sm py-0.5 rounded bg-status-pass/10 text-status-pass font-medium">
+                  Passed 1.8s
+                </span>
+</td>
+<td class="py-2 px-space-md">
+<span class="font-code-sm text-code-sm px-space-sm py-0.5 rounded bg-status-error/15 text-status-error font-medium">
+                  Failed 5.1s
+                </span>
+</td>
+<td class="py-2 px-space-md">
+<span class="font-code-sm text-code-sm px-space-sm py-0.5 rounded bg-status-error/10 text-status-error font-medium">
+                  model
+                </span>
+</td>
+<td class="py-2 px-space-md font-code-sm text-code-sm text-text-muted group-hover:text-text-primary transition-colors">
+                model.json_schema_parse
+              </td>
+<td class="py-2 px-space-md text-right">
+<a class="font-body-sm text-body-sm text-primary hover:text-primary-fixed-dim inline-flex items-center gap-1 font-medium group-hover:translate-x-0.5 transition-transform" data-path="traces" href="#">
+<span>Investigate in Traces</span>
+<span class="material-symbols-outlined text-[13px]">arrow_forward</span>
+</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-space-md py-space-sm bg-surface-container-low rounded-b-xl flex items-center justify-between text-text-disabled font-code-sm text-code-sm">
+<span>Prompt differential impact: haiku context condensation triggered JSON truncations in 3/4 tasks.</span>
+<span>Showing 4 of 4 regressed</span>
+</div>
+</div>
+<!-- Paired Slope Chart / State Transitions Section -->
+<div class="bg-surface-elevated rounded-xl p-space-lg flex flex-col gap-space-md shadow-sm mb-space-lg">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[18px]">alt_route</span>
+<h3 class="font-headline-lg text-headline-lg text-text-primary">Task State Transitions: Baseline vs Candidate</h3>
+</div>
+<p class="font-body-sm text-body-sm text-text-muted mt-0.5">
+            Full 30-task migration trajectory showing state parity, persistent failures, and regressions.
+          </p>
+</div>
+<!-- Legend -->
+<div class="flex flex-wrap items-center gap-space-md font-code-sm text-code-sm">
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-0.5 bg-outline opacity-60"></span>
+<span class="text-text-muted">Unchanged Passed (22)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-0.5 bg-status-error"></span>
+<span class="text-status-error font-medium">Newly Failing (4)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-0.5 border-t border-dashed border-status-error"></span>
+<span class="text-status-error/80">Persistent Fail (2)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-0.5 bg-status-pass"></span>
+<span class="text-status-pass">Newly Fixed (0)</span>
+</div>
+</div>
+</div>
+<!-- Interactive SVG Slope Chart Visualization -->
+<div class="w-full bg-surface-container-low rounded-lg p-space-md relative overflow-hidden">
+<!-- Axes Labels -->
+<div class="flex justify-between items-center px-4 mb-2 font-code-md text-code-md text-text-primary">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-status-pass"></span>
+<span class="font-semibold">Baseline: run_2026-09-21T09:15</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-semibold">Candidate: run_2026-09-28T14:22</span>
+<span class="w-2 h-2 rounded-full bg-status-error"></span>
+</div>
+</div>
+<div class="relative w-full h-[320px]">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 1000 300">
+<!-- Background Zone Bands -->
+<rect fill="#47AE8F" fill-opacity="0.02" height="150" width="1000" x="0" y="20"></rect>
+<rect fill="#DA7288" fill-opacity="0.03" height="90" width="1000" x="0" y="190"></rect>
+<!-- Vertical Baseline and Candidate Rails -->
+<line stroke="#323248" stroke-width="2" x1="120" x2="120" y1="20" y2="280"></line>
+<line stroke="#323248" stroke-width="2" x1="880" x2="880" y1="20" y2="280"></line>
+<!-- Baseline Nodes (Pass Bucket at y=30..140, Fail Bucket at y=210..240) -->
+<!-- 22 Unchanged Passing tasks (Grey trajectories) -->
+<g stroke="#8A919E" stroke-opacity="0.22" stroke-width="1.2">
+<line x1="120" x2="880" y1="30" y2="30"></line>
+<line x1="120" x2="880" y1="35" y2="35"></line>
+<line x1="120" x2="880" y1="40" y2="40"></line>
+<line x1="120" x2="880" y1="45" y2="45"></line>
+<line x1="120" x2="880" y1="50" y2="50"></line>
+<line x1="120" x2="880" y1="55" y2="55"></line>
+<line x1="120" x2="880" y1="60" y2="60"></line>
+<line x1="120" x2="880" y1="65" y2="65"></line>
+<line x1="120" x2="880" y1="70" y2="70"></line>
+<line x1="120" x2="880" y1="75" y2="75"></line>
+<line x1="120" x2="880" y1="80" y2="80"></line>
+<line x1="120" x2="880" y1="85" y2="85"></line>
+<line x1="120" x2="880" y1="90" y2="90"></line>
+<line x1="120" x2="880" y1="95" y2="95"></line>
+<line x1="120" x2="880" y1="100" y2="100"></line>
+<line x1="120" x2="880" y1="105" y2="105"></line>
+<line x1="120" x2="880" y1="110" y2="110"></line>
+<line x1="120" x2="880" y1="115" y2="115"></line>
+<line x1="120" x2="880" y1="120" y2="120"></line>
+<line x1="120" x2="880" y1="125" y2="125"></line>
+<line x1="120" x2="880" y1="130" y2="130"></line>
+<line x1="120" x2="880" y1="135" y2="135"></line>
+</g>
+<!-- 2 Persistent Failing tasks (Dashed Red) -->
+<g opacity="0.6" stroke="#DA7288" stroke-dasharray="4 3" stroke-width="1.8">
+<line x1="120" x2="880" y1="210" y2="210"></line>
+<line x1="120" x2="880" y1="225" y2="225"></line>
+</g>
+<!-- 4 Newly Failing tasks (Distinct Solid Red Slopes) -->
+<!-- task_fx_014_run2 -->
+<path class="transition-all hover:stroke-white cursor-pointer" d="M 120 142 C 450 142, 550 240, 880 240" fill="none" id="slope_014" stroke="#DA7288" stroke-width="2.5"></path>
+<!-- task_fx_021_run1 -->
+<path class="transition-all hover:stroke-white cursor-pointer" d="M 120 150 C 450 150, 550 252, 880 252" fill="none" id="slope_021" stroke="#DA7288" stroke-width="2.5"></path>
+<!-- task_fx_008_plan -->
+<path class="transition-all hover:stroke-white cursor-pointer" d="M 120 158 C 450 158, 550 264, 880 264" fill="none" id="slope_008" stroke="#DA7288" stroke-width="2.5"></path>
+<!-- task_fx_029_eval -->
+<path class="transition-all hover:stroke-white cursor-pointer" d="M 120 166 C 450 166, 550 276, 880 276" fill="none" id="slope_029" stroke="#DA7288" stroke-width="2.5"></path>
+<!-- Anchors and Labels on Baseline Axis (Left) -->
+<circle cx="120" cy="85" fill="#47AE8F" r="4"></circle>
+<text fill="#47AE8F" font-family="JetBrains Mono" font-size="11" font-weight="600" text-anchor="end" x="110" y="88">PASSED (28)</text>
+<circle cx="120" cy="217" fill="#DA7288" r="4"></circle>
+<text fill="#DA7288" font-family="JetBrains Mono" font-size="11" font-weight="600" text-anchor="end" x="110" y="221">FAILED (2)</text>
+<!-- Anchors and Labels on Candidate Axis (Right) -->
+<circle cx="880" cy="82" fill="#47AE8F" r="4"></circle>
+<text fill="#47AE8F" font-family="JetBrains Mono" font-size="11" font-weight="600" text-anchor="start" x="890" y="85">PASSED (24)</text>
+<circle cx="880" cy="245" fill="#DA7288" r="4"></circle>
+<text fill="#DA7288" font-family="JetBrains Mono" font-size="11" font-weight="600" text-anchor="start" x="890" y="248">FAILED (6)</text>
+<!-- Specific regression dots -->
+<circle cx="120" cy="142" fill="#DA7288" r="3"></circle>
+<circle cx="880" cy="240" fill="#DA7288" r="3.5"></circle>
+<circle cx="120" cy="150" fill="#DA7288" r="3"></circle>
+<circle cx="880" cy="252" fill="#DA7288" r="3.5"></circle>
+<circle cx="120" cy="158" fill="#DA7288" r="3"></circle>
+<circle cx="880" cy="264" fill="#DA7288" r="3.5"></circle>
+<circle cx="120" cy="166" fill="#DA7288" r="3"></circle>
+<circle cx="880" cy="276" fill="#DA7288" r="3.5"></circle>
+</svg>
+<!-- Interactive Tooltip Overlay Cards (Pinned Context) -->
+<div class="absolute left-[38%] top-[55%] -translate-y-1/2 bg-surface-elevated/95 backdrop-blur-sm p-space-sm rounded-lg border-subtle shadow-xl pointer-events-none flex flex-col gap-1 max-w-[240px]">
+<div class="flex items-center justify-between gap-2">
+<span class="font-code-sm text-code-sm text-status-error font-semibold">task_fx_008_plan</span>
+<span class="font-code-sm text-code-sm text-status-error bg-status-error/15 px-1 rounded">Regressed</span>
+</div>
+<div class="flex items-center justify-between text-text-muted font-code-sm text-code-sm">
+<span>Latency Delta:</span>
+<span class="text-status-error font-medium">+6.3s (2.1s → 8.4s)</span>
+</div>
+<div class="flex items-center justify-between text-text-muted font-code-sm text-code-sm">
+<span>Cost Delta:</span>
+<span class="text-status-pass font-medium">-€0.0021</span>
+</div>
+</div>
+</div>
+<!-- Slope inspection details drawer -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-space-sm pt-space-md border-t border-border-subtle mt-2">
+<div class="bg-surface-elevated p-space-sm rounded-lg flex flex-col">
+<span class="font-code-sm text-code-sm text-text-disabled uppercase">task_fx_014_run2</span>
+<span class="font-code-md text-code-md text-status-error mt-0.5">+3.6s · tool</span>
+</div>
+<div class="bg-surface-elevated p-space-sm rounded-lg flex flex-col">
+<span class="font-code-sm text-code-sm text-text-disabled uppercase">task_fx_021_run1</span>
+<span class="font-code-md text-code-md text-status-error mt-0.5">+1.3s · retrieval</span>
+</div>
+<div class="bg-surface-elevated p-space-sm rounded-lg flex flex-col">
+<span class="font-code-sm text-code-sm text-text-disabled uppercase">task_fx_008_plan</span>
+<span class="font-code-md text-code-md text-status-error mt-0.5">+6.3s · orchestrate</span>
+</div>
+<div class="bg-surface-elevated p-space-sm rounded-lg flex flex-col">
+<span class="font-code-sm text-code-sm text-text-disabled uppercase">task_fx_029_eval</span>
+<span class="font-code-md text-code-md text-status-error mt-0.5">+3.3s · model</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

@@ -1,0 +1,5 @@
+[
+  {"task_id": "fx_014", "description": "Look up a named customer session"},
+  {"task_id": "fx_021", "description": "Retrieve policy context for an account"},
+  {"task_id": "fx_008", "description": "Plan a multi-step support response"}
+]
