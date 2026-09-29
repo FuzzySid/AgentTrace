@@ -15,5 +15,6 @@ CREATE TABLE IF NOT EXISTS spans (
     tokens_in BIGINT,
     tokens_out BIGINT,
     cost_eur DOUBLE,
-    attributes JSON NOT NULL DEFAULT '{}'
+    attributes JSON NOT NULL DEFAULT '{}',
+    serialized_bytes BIGINT NOT NULL DEFAULT 0
 );

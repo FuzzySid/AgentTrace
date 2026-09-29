@@ -1,5 +1,5 @@
 [
-  {"task_id": "fx_014", "description": "Look up a named customer session"},
-  {"task_id": "fx_021", "description": "Retrieve policy context for an account"},
-  {"task_id": "fx_008", "description": "Plan a multi-step support response"}
+  {"task_id": "fx_001", "question": "Why should a distributed agent trace preserve both trace_id and span_id?"},
+  {"task_id": "fx_002", "question": "What should an operator do after repeated tool timeouts? Calculate the total retry budget for three 2-second attempts with two 500ms backoffs."},
+  {"task_id": "fx_003", "question": "How should a team choose a telemetry capture tier while debugging an incident?"}
 ]
