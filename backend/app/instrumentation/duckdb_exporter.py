@@ -51,8 +51,14 @@ class DuckDBSpanExporter(SpanExporter):
         self._connection = duckdb.connect(str(self.database_path))
         self._connection.execute(schema.read_text(encoding="utf-8"))
         self._connection.execute("ALTER TABLE spans ADD COLUMN IF NOT EXISTS serialized_bytes BIGINT DEFAULT 0")
+        self._connection.execute("ALTER TABLE spans ADD COLUMN IF NOT EXISTS events JSON DEFAULT '[]'")
         self._lock = threading.Lock()
         self._closed = False
+
+    def clear_run(self, run_id: str) -> None:
+        """Replace a named benchmark run when its runner is invoked again."""
+        with self._lock:
+            self._connection.execute("DELETE FROM spans WHERE run_id = ?", [run_id])
 
     def export(self, spans: Sequence[ReadableSpan]) -> SpanExportResult:
         if self._closed:
@@ -69,6 +75,10 @@ class DuckDBSpanExporter(SpanExporter):
             status = getattr(span.status.status_code, "name", str(span.status.status_code))
             input_tokens = attrs.get("gen_ai.usage.input_tokens")
             output_tokens = attrs.get("gen_ai.usage.output_tokens")
+            events = [
+                {"name": event.name, "timestamp": event.timestamp, "attributes": _json_safe(dict(event.attributes or {}))}
+                for event in span.events
+            ]
             rows.append((
                 f"{context.trace_id:032x}",
                 f"{context.span_id:016x}",
@@ -87,6 +97,7 @@ class DuckDBSpanExporter(SpanExporter):
                 int(output_tokens) if isinstance(output_tokens, int) else None,
                 None,
                 json.dumps(_json_safe(attrs), ensure_ascii=False, separators=(",", ":")),
+                json.dumps(events, ensure_ascii=False, separators=(",", ":")),
                 serialized_span_size(span),
             ))
         if not rows:
@@ -97,8 +108,8 @@ class DuckDBSpanExporter(SpanExporter):
                     trace_id, span_id, parent_span_id, task_id, run_id, name,
                     operation_name, depth, start_time, end_time, duration_ms,
                     status, capture_tier, tokens_in, tokens_out, cost_eur,
-                    attributes, serialized_bytes
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::JSON, ?)""",
+                    attributes, events, serialized_bytes
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?::JSON, ?::JSON, ?)""",
                 rows,
             )
         return SpanExportResult.SUCCESS

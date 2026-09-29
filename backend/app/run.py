@@ -10,11 +10,14 @@ from typing import Any
 from opentelemetry import trace
 
 from app.config.models import DEFAULT_CAPTURE_TIER, DEFAULT_MODEL_TIER
+from app.config.models import model_for_tier
 from app.instrumentation.setup import RunContext, configure_tracing, run_context, shutdown_tracing
 
 
-def run_tasks(tasks: list[dict[str, Any]], *, run_id: str, capture_tier: str, model_tier: str, force_eval: bool = False) -> list[dict[str, Any]]:
-    configure_tracing()
+def run_tasks(tasks: list[dict[str, Any]], *, run_id: str, capture_tier: str, model_tier: str, prompt_version: str | None = None, force_eval: bool = False) -> list[dict[str, Any]]:
+    # Invalid service configuration is a setup error, not an injected model failure.
+    model_for_tier(model_tier)
+    configure_tracing(run_id)
     from app.agent.graph import run_question
     from app.agent.injections import fixture_node_wrapper
 
@@ -31,8 +34,8 @@ def run_tasks(tasks: list[dict[str, Any]], *, run_id: str, capture_tier: str, mo
                 task_id=task_id,
                 model_tier=model_tier,
                 capture_tier=capture_tier,
-                prompt_version=str(task.get("prompt_version", "v1")),
-                is_eval=force_eval or bool(task.get("is_eval", "expected_failure_class" in task)),
+                prompt_version=prompt_version or str(task.get("prompt_version", "verbose")),
+                is_eval=force_eval or bool(task.get("is_eval", False)),
             )
             with run_context(context):
                 with tracer.start_as_current_span("agent.invoke_agent") as root:
@@ -68,15 +71,16 @@ def run_tasks(tasks: list[dict[str, Any]], *, run_id: str, capture_tier: str, mo
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run AgentTrace fixture tasks")
     parser.add_argument("--tasks", type=Path, required=True, help="JSON array of task objects")
-    parser.add_argument("--tier", choices=("attrs", "full"), default=DEFAULT_CAPTURE_TIER, help="Telemetry content-capture tier")
-    parser.add_argument("--model-tier", choices=("cheap", "mid", "premium"), default=DEFAULT_MODEL_TIER)
+    parser.add_argument("--tier", "--model-tier", dest="model_tier", choices=("cheap", "mid", "premium"), default=DEFAULT_MODEL_TIER, help="Model service tier")
+    parser.add_argument("--capture-tier", choices=("full", "attrs", "sampled"), default=DEFAULT_CAPTURE_TIER, help="Exporter capture tier")
+    parser.add_argument("--prompt-version", choices=("verbose", "terse"), default="verbose")
     parser.add_argument("--run-id", required=True)
     parser.add_argument("--eval", action="store_true", help="Mark every span in this run as evaluation telemetry")
     args = parser.parse_args()
     tasks = json.loads(args.tasks.read_text(encoding="utf-8"))
     if not isinstance(tasks, list):
         raise ValueError("Tasks file must contain a JSON array")
-    run_tasks(tasks, run_id=args.run_id, capture_tier=args.tier, model_tier=args.model_tier, force_eval=args.eval)
+    run_tasks(tasks, run_id=args.run_id, capture_tier=args.capture_tier, model_tier=args.model_tier, prompt_version=args.prompt_version, force_eval=args.eval)
 
 
 if __name__ == "__main__":

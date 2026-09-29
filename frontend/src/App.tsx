@@ -11,7 +11,7 @@ export default function App() {
   return <AppShell screen={screen} onScreen={setScreen} runId={runId} onRunChange={setRunId}>
     {screen === 'traces' && <TraceExplorer runId={runId} />}
     {screen === 'cost' && <CostDashboard runId={runId} />}
-    {screen === 'regressions' && <RegressionCompare runId={runId} />}
+    {screen === 'regressions' && <RegressionCompare />}
     {screen === 'telemetry' && <TelemetryTax runId={runId} />}
   </AppShell>
 }

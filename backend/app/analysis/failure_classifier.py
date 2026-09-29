@@ -45,20 +45,22 @@ def _error_class(span: EvidenceSpan) -> str:
 def classify_trace(spans: Sequence[EvidenceSpan], *, retrieval_score_threshold: float = 0.1) -> Attribution:
     """Classify one trace; earliest failing span is primary, later findings are symptoms."""
     ordered = sorted(spans, key=lambda span: (span.start_time_ms, span.span_id))
-    findings: list[tuple[float, str, str]] = []
+    errors: list[tuple[float, str, str]] = []
+    structural: list[tuple[float, str, str]] = []
     for span in ordered:
         status = span.status.upper()
         if status == "ERROR":
-            findings.append((span.start_time_ms, span.span_id, _error_class(span)))
-        elif span.critique_hit_cap:
-            findings.append((span.start_time_ms, span.span_id, "orchestration"))
-        elif span.retrieval_document_count == 0 or (
+            errors.append((span.start_time_ms, span.span_id, _error_class(span)))
+        if span.critique_hit_cap:
+            structural.append((span.start_time_ms, span.span_id, "orchestration"))
+        if span.retrieval_document_count == 0 or (
             span.retrieval_top_score is not None and span.retrieval_top_score < retrieval_score_threshold
         ):
-            findings.append((span.start_time_ms, span.span_id, "retrieval"))
-        elif span.output_assertion_passed is False:
-            findings.append((span.start_time_ms, span.span_id, "model"))
+            structural.append((span.start_time_ms, span.span_id, "retrieval"))
+        if span.output_assertion_passed is False:
+            structural.append((span.start_time_ms, span.span_id, "model"))
 
+    findings = errors or structural
     if not findings:
         return Attribution("passed", None, ())
     # Only the first rule applies to an individual span. Across spans, preserve time order.

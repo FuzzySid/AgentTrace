@@ -20,6 +20,7 @@ from openinference.instrumentation.langchain import LangChainInstrumentor
 from openinference.instrumentation.litellm import LiteLLMInstrumentor
 
 from app.instrumentation.duckdb_exporter import DuckDBSpanExporter
+from app.instrumentation.tier_exporter import CaptureTierSpanExporter
 
 load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 
@@ -36,6 +37,8 @@ class RunContext:
 
 _run_context: ContextVar[RunContext | None] = ContextVar("agenttrace_run_context", default=None)
 _capture_tier: ContextVar[str] = ContextVar("agenttrace_capture_tier", default="attrs")
+_is_eval_call: ContextVar[bool] = ContextVar("agenttrace_is_eval_call", default=False)
+_prompt_version: ContextVar[str] = ContextVar("agenttrace_prompt_version", default="verbose")
 _provider: TracerProvider | None = None
 
 
@@ -43,14 +46,30 @@ def current_capture_tier() -> str:
     return _capture_tier.get()
 
 
+def current_prompt_version() -> str:
+    return _prompt_version.get()
+
+
+@contextmanager
+def evaluation_call() -> Iterator[None]:
+    """Tag spans for a judge/evaluation call without tagging the full agent session."""
+    token = _is_eval_call.set(True)
+    try:
+        yield
+    finally:
+        _is_eval_call.reset(token)
+
+
 @contextmanager
 def run_context(context: RunContext) -> Iterator[None]:
     context_token = _run_context.set(context)
     tier_token = _capture_tier.set(context.capture_tier)
+    prompt_token = _prompt_version.set(context.prompt_version)
     try:
         yield
     finally:
         _capture_tier.reset(tier_token)
+        _prompt_version.reset(prompt_token)
         _run_context.reset(context_token)
 
 
@@ -66,7 +85,7 @@ class AgentTraceAttributesProcessor(SpanProcessor):
         span.set_attribute("agenttrace.task_id", context.task_id)
         span.set_attribute("agenttrace.run_id", context.run_id)
         span.set_attribute("agenttrace.capture_tier", context.capture_tier)
-        if context.is_eval:
+        if context.is_eval or _is_eval_call.get():
             span.set_attribute("agenttrace.is_eval", True)
 
     def on_end(self, span) -> None:
@@ -79,7 +98,7 @@ class AgentTraceAttributesProcessor(SpanProcessor):
         return True
 
 
-def configure_tracing() -> TracerProvider:
+def configure_tracing(run_id: str | None = None) -> TracerProvider:
     """Configure Phoenix OTLP and DuckDB exporters, then instrument graph and model calls."""
     global _provider
     if _provider is not None:
@@ -89,8 +108,12 @@ def configure_tracing() -> TracerProvider:
     phoenix_endpoint = os.getenv("PHOENIX_OTLP_ENDPOINT", "http://127.0.0.1:4317")
     provider = TracerProvider(resource=Resource.create({"service.name": "agenttrace"}))
     provider.add_span_processor(AgentTraceAttributesProcessor())
-    provider.add_span_processor(SimpleSpanProcessor(DuckDBSpanExporter(database_path)))
-    provider.add_span_processor(BatchSpanProcessor(OTLPSpanExporter(endpoint=phoenix_endpoint, insecure=phoenix_endpoint.startswith("http://"))))
+    database_exporter = DuckDBSpanExporter(database_path)
+    if run_id is not None:
+        database_exporter.clear_run(run_id)
+    provider.add_span_processor(SimpleSpanProcessor(CaptureTierSpanExporter(database_exporter)))
+    otlp_exporter = OTLPSpanExporter(endpoint=phoenix_endpoint, insecure=phoenix_endpoint.startswith("http://"))
+    provider.add_span_processor(BatchSpanProcessor(CaptureTierSpanExporter(otlp_exporter)))
     trace.set_tracer_provider(provider)
 
     # LangGraph is built on LangChain runnables; this instrumentor captures graph/node

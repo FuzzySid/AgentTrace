@@ -7,7 +7,6 @@ from litellm import completion
 from opentelemetry import trace
 
 from app.config.models import API_BASE, API_KEY, PROVIDER_NAME, model_for_tier
-from app.instrumentation.setup import current_capture_tier
 
 tracer = trace.get_tracer("agenttrace.llm")
 
@@ -26,7 +25,7 @@ def _message_text(value: Any) -> str:
     return ""
 
 
-def chat(messages: list[dict[str, str]], *, tier: str, purpose: str) -> str:
+def _chat(messages: list[dict[str, str]], *, tier: str, purpose: str) -> str:
     """Make one non-streaming chat request and record provider-returned model/usage."""
     model = model_for_tier(tier)
     with tracer.start_as_current_span(f"gen_ai.chat {purpose}") as span:
@@ -34,8 +33,9 @@ def chat(messages: list[dict[str, str]], *, tier: str, purpose: str) -> str:
         span.set_attribute("gen_ai.provider.name", PROVIDER_NAME)
         span.set_attribute("gen_ai.request.model", model)
         span.set_attribute("agenttrace.llm.purpose", purpose)
-        if current_capture_tier() == "full":
-            span.set_attribute("gen_ai.input.messages", json.dumps(messages, ensure_ascii=False))
+        input_messages = json.dumps(messages, ensure_ascii=False)
+        span.set_attribute("gen_ai.input.messages", input_messages)
+        span.add_event("gen_ai.prompt", {"gen_ai.prompt.text": input_messages})
 
         kwargs: dict[str, Any] = {"model": model, "messages": messages, "temperature": 0.1, "stream": False}
         if API_KEY:
@@ -66,9 +66,12 @@ def chat(messages: list[dict[str, str]], *, tier: str, purpose: str) -> str:
             span.set_attribute("gen_ai.response.finish_reasons", [str(finish_reason)])
         message = _field(choice, "message", {})
         content = _message_text(_field(message, "content", ""))
-        if current_capture_tier() == "full":
-            span.set_attribute(
-                "gen_ai.output.messages",
-                json.dumps([{"role": "assistant", "content": content}], ensure_ascii=False),
-            )
+        output_messages = json.dumps([{"role": "assistant", "content": content}], ensure_ascii=False)
+        span.set_attribute("gen_ai.output.messages", output_messages)
+        span.add_event("gen_ai.completion", {"gen_ai.completion.text": content})
         return content
+
+
+def chat(messages: list[dict[str, str]], *, tier: str, purpose: str) -> str:
+    """Call the selected tier; evaluation callers set their own evaluation context."""
+    return _chat(messages, tier=tier, purpose=purpose)

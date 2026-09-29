@@ -6,5 +6,5 @@ router = APIRouter(prefix="/regressions", tags=["regressions"])
 
 
 @router.get("")
-def compare(baseline: str = "run_001", candidate: str = "run_002"):
-    return regression_comparison(baseline, candidate)
+def compare(comparison: str = "prompt", baseline: str | None = None, candidate: str | None = None):
+    return regression_comparison(comparison, baseline, candidate)

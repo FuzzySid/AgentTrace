@@ -2,16 +2,28 @@
 
 import json
 import os
+import re
 from collections import defaultdict
 from pathlib import Path
 
 import duckdb
 from dotenv import load_dotenv
 
+from app.analysis.cost_model import compute_cost_summary, trace_costs
 from app.analysis.failure_classifier import EvidenceSpan, classify_trace
+from app.analysis.regression import compare_runs
+from app.analysis.tax_harness import summarize_tax
+from app.config.comparisons import BASELINE_COMPARISONS
 
 _BACKEND = Path(__file__).resolve().parents[2]
 load_dotenv(_BACKEND / ".env")
+_PRIVATE_NAMES = tuple(filter(None, (
+    os.getenv("AGENTTRACE_PROVIDER_NAME", ""),
+    os.getenv("AGENTTRACE_MODEL_CHEAP", ""),
+    os.getenv("AGENTTRACE_MODEL_MID", ""),
+    os.getenv("AGENTTRACE_MODEL_PREMIUM", ""),
+)))
+_COMMON_PROVIDER_NAMES = ("OpenAI", "Anthropic", "Google", "Gemini", "Vertex", "Amazon Bedrock", "AWS", "Azure", "Mistral", "Cohere", "Groq", "Together", "DeepSeek", "xAI")
 _INJECTION_CLASS = {
     "tool_timeout": "tool",
     "retrieval_miss": "retrieval",
@@ -67,11 +79,34 @@ def _attributes(row: dict) -> dict:
     return dict(value)
 
 
+def _public_text(value: str) -> str:
+    for private_name in (*_PRIVATE_NAMES, *_COMMON_PROVIDER_NAMES):
+        value = re.sub(re.escape(private_name), "[redacted]", value, flags=re.IGNORECASE)
+    return value
+
+
+def _public_attributes(attrs: dict) -> dict:
+    result = {}
+    for key, value in attrs.items():
+        normalized = str(key).casefold()
+        if "provider" in normalized or ("model" in normalized and normalized != "agenttrace.model_tier"):
+            continue
+        if isinstance(value, str):
+            result[key] = _public_text(value)
+        elif isinstance(value, dict):
+            result[key] = _public_attributes(value)
+        elif isinstance(value, list):
+            result[key] = [_public_attributes(item) if isinstance(item, dict) else _public_text(item) if isinstance(item, str) else item for item in value]
+        else:
+            result[key] = value
+    return result
+
+
 def _evidence(rows: list[dict]) -> list[EvidenceSpan]:
     """Allowlist inference signals before constructing the classifier's input."""
     evidence = []
     for row in rows:
-        attrs = _attributes(row)
+        attrs = _public_attributes(_attributes(row))
         operation = str(row.get("operation_name") or attrs.get("agenttrace.operation") or attrs.get("gen_ai.operation.name") or "")
         retrieval_count = None
         top_score = None
@@ -106,6 +141,7 @@ def _evidence(rows: list[dict]) -> list[EvidenceSpan]:
 def _trace_info(rows: list[dict]) -> dict:
     ordered = sorted(rows, key=lambda r: (r.get("start_time") or 0, r.get("span_id", "")))
     attribution = classify_trace(_evidence(ordered))
+    costs = trace_costs(ordered)
     starts = [row["start_time"] for row in ordered if row.get("start_time")]
     ends = [row["end_time"] for row in ordered if row.get("end_time")]
     duration = (max(ends) - min(starts)).total_seconds() * 1000 if starts and ends else 0.0
@@ -120,11 +156,31 @@ def _trace_info(rows: list[dict]) -> dict:
         "status": "passed" if attribution.primary_failure_class == "passed" else "failed",
         "failure_class": None if attribution.primary_failure_class == "passed" else attribution.primary_failure_class,
         "duration_ms": duration,
-        "cost_eur": sum(float(row.get("cost_eur") or 0) for row in rows),
+        "cost_eur": next(iter(costs.values()), {}).get("cost_eur", 0.0),
         "span_count": len(rows),
         "capture_tier": next((str(row.get("capture_tier")) for row in rows if row.get("capture_tier")), "attrs"),
         "rows": ordered,
     }
+
+
+def _run_statuses(rows: list[dict]) -> dict[str, dict]:
+    groups: dict[str, list[dict]] = defaultdict(list)
+    for row in rows:
+        groups[str(row.get("trace_id", ""))].append(row)
+    result = {}
+    for trace_id, trace_rows in groups.items():
+        info = _trace_info(trace_rows)
+        root = next((row for row in trace_rows if not row.get("parent_span_id")), trace_rows[0])
+        attrs = _attributes(root)
+        result[trace_id] = {
+            "task_id": info["task_id"],
+            "status": info["status"],
+            "failure_class": info["failure_class"],
+            "started_at": root.get("start_time").timestamp() if root.get("start_time") else 0,
+            "prompt_version": attrs.get("agenttrace.prompt_version", "unknown"),
+            "model_tier": attrs.get("agenttrace.model_tier", "unknown"),
+        }
+    return result
 
 def list_runs():
     groups: dict[str, list[dict]] = defaultdict(list)
@@ -169,7 +225,7 @@ def trace_detail(trace_id: str):
     spans = []
     depths = {}
     for row in info["rows"]:
-        attrs = _attributes(row)
+        attrs = _public_attributes(_attributes(row))
         # Injection labels are scoring ground truth and are never exposed as trace evidence.
         attrs.pop("agenttrace.injected_failure", None)
         start = row.get("start_time")
@@ -179,12 +235,12 @@ def trace_detail(trace_id: str):
         spans.append({
             "span_id": str(row.get("span_id", "")),
             "parent_span_id": parent_id,
-            "name": str(row.get("name", "")),
+            "name": _public_text(str(row.get("name", ""))),
             "depth": depth,
             "start_ms": (start - origin).total_seconds() * 1000 if start and origin else 0,
             "duration_ms": float(row.get("duration_ms") or 0),
             "status": str(row.get("status", "UNSET")),
-            "operation_name": row.get("operation_name"),
+            "operation_name": _public_text(str(row.get("operation_name"))) if row.get("operation_name") else None,
             "tokens_in": row.get("tokens_in"),
             "tokens_out": row.get("tokens_out"),
             "attributes": attrs,
@@ -233,10 +289,29 @@ def confusion_matrix(run_id: str):
     return {"labels": labels, "matrix": matrix, "accuracy": correct / len(latest) if latest else 0.0}
 
 def cost_summary(run_id: str):
-    return {"median_cost_eur": 0.0031, "median_cost_successful_eur": 0.0024, "p50_latency_ms": 1420, "p95_latency_ms": 4820, "cost_by_span_type": {"plan": 0.0152, "retrieve": 0.0076, "synthesize": 0.0447, "critique_loop": 0.0414}, "distribution": [{"bucket_eur": 0.001, "count": 4}, {"bucket_eur": 0.002, "count": 6}, {"bucket_eur": 0.003, "count": 9}, {"bucket_eur": 0.004, "count": 4}, {"bucket_eur": 0.006, "count": 3}, {"bucket_eur": 0.008, "count": 4}], "top_sessions": [{"task_id": "fx_008", "cost_eur": 0.0079, "duration_ms": 8410, "span_count": 28, "status": "failed"}, {"task_id": "fx_029", "cost_eur": 0.0055, "duration_ms": 5120, "span_count": 19, "status": "failed"}, {"task_id": "fx_014", "cost_eur": 0.0042, "duration_ms": 4820, "span_count": 14, "status": "failed"}, {"task_id": "fx_003", "cost_eur": 0.0038, "duration_ms": 3920, "span_count": 12, "status": "passed"}, {"task_id": "fx_017", "cost_eur": 0.0031, "duration_ms": 2440, "span_count": 8, "status": "passed"}, {"task_id": "fx_012", "cost_eur": 0.0028, "duration_ms": 1890, "span_count": 7, "status": "passed"}]}
+    rows = _all_spans(run_id=run_id)
+    return compute_cost_summary(rows, {trace_id: status["status"] for trace_id, status in _run_statuses(rows).items()})
 
-def regression_comparison(baseline: str, candidate: str):
-    return {"baseline": {"run_id": baseline, "prompt_version": "v1-verbose", "model_tier": "mid"}, "candidate": {"run_id": candidate, "prompt_version": "v3-terse", "model_tier": "cheap"}, "failure_rate": {"baseline": 0.067, "candidate": 0.20}, "cost_per_success_eur": {"baseline": 0.0048, "candidate": 0.0024}, "p95_latency_ms": {"baseline": 3100, "candidate": 4820}, "newly_failing": [{"task_id": "fx_014", "failure_class": "tool"}, {"task_id": "fx_021", "failure_class": "retrieval"}, {"task_id": "fx_008", "failure_class": "orchestration"}, {"task_id": "fx_029", "failure_class": "model"}], "newly_fixed": [{"task_id": "fx_019"}]}
+def regression_comparison(comparison: str = "prompt", baseline: str | None = None, candidate: str | None = None):
+    configured = BASELINE_COMPARISONS.get(comparison, BASELINE_COMPARISONS["prompt"])
+    baseline_id = baseline or configured["baseline_run_id"]
+    candidate_id = candidate or configured["candidate_run_id"]
+    baseline_rows = _all_spans(run_id=baseline_id)
+    candidate_rows = _all_spans(run_id=candidate_id)
+    return compare_runs(
+        baseline_id, baseline_rows, _run_statuses(baseline_rows),
+        candidate_id, candidate_rows, _run_statuses(candidate_rows),
+    )
+
+def _tax_run_prefix(run_id: str) -> str:
+    for suffix in ("-full", "-attrs", "-sampled"):
+        if run_id.endswith(suffix):
+            return run_id[:-len(suffix)]
+    return run_id
+
 
 def telemetry_tax(run_id: str):
-    return {"tiers": [{"tier": "full", "span_count": 420, "total_bytes": 42600000, "bytes_per_session": 1420000, "ratio_vs_full": 1.0}, {"tier": "attrs", "span_count": 420, "total_bytes": 13200000, "bytes_per_session": 440000, "ratio_vs_full": 0.31}, {"tier": "sampled", "span_count": 42, "total_bytes": 1700000, "bytes_per_session": 57000, "ratio_vs_full": 0.04}], "capabilities": [{"question": "Find a named session from last Tuesday", "full": "yes", "attrs": "yes", "sampled": "no"}, {"question": "Attribute a regression affecting 4 tasks", "full": "yes", "attrs": "yes", "sampled": "partial"}, {"question": "Read the actual prompt text", "full": "yes", "attrs": "no", "sampled": "no"}, {"question": "Trend failure rate over time", "full": "yes", "attrs": "yes", "sampled": "yes"}], "recommendation": {"default_tier": "attrs", "tradeoff": "Run Attributes only in production to localize failures and monitor unit economics at 69% lower storage cost; use Full only when prompt text debugging is required."}}
+    prefix = _tax_run_prefix(run_id)
+    rows_by_tier = {tier: _all_spans(run_id=f"{prefix}-{tier}") for tier in ("full", "attrs", "sampled")}
+    statuses_by_tier = {tier: _run_statuses(rows) for tier, rows in rows_by_tier.items()}
+    return summarize_tax(rows_by_tier, statuses_by_tier)

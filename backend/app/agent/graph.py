@@ -12,7 +12,7 @@ from opentelemetry import trace
 
 from app.agent.llm import chat
 from app.agent.tools import run_tool
-from app.instrumentation.setup import current_capture_tier
+from app.instrumentation.setup import current_prompt_version
 
 tracer = trace.get_tracer("agenttrace.graph")
 CORPUS_DIR = Path(__file__).resolve().parents[2] / "fixtures" / "corpus"
@@ -134,9 +134,14 @@ def build_agent(tier: str, *, node_wrapper: Callable[[str, Node], Node] | None =
     def plan(state: AgentState) -> dict[str, Any]:
         with tracer.start_as_current_span("agenttrace.plan") as span:
             span.set_attribute("agenttrace.operation", "plan")
+            system_prompt = (
+                "Plan a concise evidence-based answer. Return only JSON with search_query, calculation (expression or null), and plan. Do not answer yet."
+                if current_prompt_version() == "terse"
+                else "Plan a thorough evidence-based answer. Identify the facts to retrieve and any arithmetic needed. Return only JSON with keys search_query, calculation (an arithmetic expression or null), and plan. Do not answer the question yet."
+            )
             raw = chat(
                 [
-                    {"role": "system", "content": "Plan a concise answer to the user. Return only JSON with keys search_query, calculation (an arithmetic expression or null), and plan. Do not answer the question yet."},
+                    {"role": "system", "content": system_prompt},
                     {"role": "user", "content": f"Question: {state['question']}\nPrevious critique: {state.get('feedback', 'none')}"},
                 ],
                 tier=tier,
@@ -157,8 +162,7 @@ def build_agent(tier: str, *, node_wrapper: Callable[[str, Node], Node] | None =
             span.set_attribute("gen_ai.data_source.id", "agenttrace-corpus")
             span.set_attribute("gen_ai.retrieval.query.text", query)
             span.set_attribute("gen_ai.retrieval.documents", json.dumps([{"id": d["doc_id"], "score": d["score"]} for d in documents]))
-            if current_capture_tier() == "full":
-                span.set_attribute("agenttrace.retrieval.document_bodies", json.dumps([d["text"] for d in documents], ensure_ascii=False))
+            span.set_attribute("agenttrace.retrieval.document_bodies", json.dumps([d["text"] for d in documents], ensure_ascii=False))
             return {"documents": documents}
 
     def summarize(state: AgentState) -> dict[str, Any]:
@@ -182,10 +186,17 @@ def build_agent(tier: str, *, node_wrapper: Callable[[str, Node], Node] | None =
                 f"Question: {state['question']}\nPlan: {state.get('plan', '')}\n"
                 f"Tool result: {state.get('tool_result', '')}\n"
                 f"Retrieved reference text:\n{references or '(No matching reference documents.)'}\n\n"
-                "Answer using only claims supported by the retrieved reference text. Clearly label any arithmetic tool result. Cite supporting doc_id values inline. If the reference text does not support an answer, say so."
+                + ("Use only supported claims. Cite doc_id values. Label calculations. If evidence is missing, say so."
+                   if current_prompt_version() == "terse" else
+                   "Answer using only claims supported by the retrieved reference text. Clearly label any arithmetic tool result. Cite supporting doc_id values inline. If the reference text does not support an answer, say so.")
+            )
+            synthesis_system = (
+                "Be concise and ground factual claims only in supplied references."
+                if current_prompt_version() == "terse"
+                else "You are a careful technical support agent. Ground factual statements only in the supplied retrieved reference text. Explain the answer clearly and distinguish evidence from calculations."
             )
             answer = chat(
-                [{"role": "system", "content": "You are a careful technical support agent. Ground factual statements only in the supplied retrieved reference text."}, {"role": "user", "content": prompt}],
+                [{"role": "system", "content": synthesis_system}, {"role": "user", "content": prompt}],
                 tier=tier,
                 purpose="synthesize",
             )
@@ -194,9 +205,14 @@ def build_agent(tier: str, *, node_wrapper: Callable[[str, Node], Node] | None =
     def critique(state: AgentState) -> dict[str, Any]:
         with tracer.start_as_current_span("agenttrace.critique") as span:
             span.set_attribute("agenttrace.operation", "critique")
+            critique_system = (
+                "Check support against the evidence. Return JSON with supported and feedback."
+                if current_prompt_version() == "terse"
+                else "Judge whether each factual claim in the answer is supported by the supplied evidence. Return only JSON: {\"supported\": true|false, \"feedback\": \"short reason\"}."
+            )
             raw = chat(
                 [
-                    {"role": "system", "content": "Judge whether the answer's factual claims are supported by the supplied evidence. Return only JSON: {\"supported\": true|false, \"feedback\": \"short reason\"}."},
+                    {"role": "system", "content": critique_system},
                     {"role": "user", "content": f"Evidence:\n{chr(10).join(d['text'] for d in state.get('documents', []))}\n\nAnswer:\n{state.get('answer', '')}"},
                 ],
                 tier=tier,
