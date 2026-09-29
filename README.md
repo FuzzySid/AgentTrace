@@ -1,6 +1,6 @@
 # AgentTrace
 
-AgentTrace is a compact observability workbench for agent runs. This scaffold includes a FastAPI API backed by mock query payloads, a DuckDB schema for spans, and a React dashboard for traces, costs, regressions, and telemetry capture tiers.
+AgentTrace is a compact observability workbench for agent runs. The Traces screen reads real exported spans from DuckDB. Cost, regression, and telemetry views still use sample payloads while those analyses are developed.
 
 ## Run locally
 
@@ -28,7 +28,7 @@ npm install
 npm run dev
 ```
 
-The UI is at http://localhost:5173 and the API docs are at http://localhost:8000/docs. Vite proxies `/api` requests to FastAPI. All dashboard data is served over HTTP from mock query functions in `backend/app/store/queries.py`.
+The UI is at http://localhost:5173 and the API docs are at http://localhost:8000/docs. Vite proxies `/api` requests to FastAPI. The Traces API reads runs, traces, span details, and the fixture confusion matrix from DuckDB.
 
 ## Agent runner and tracing
 
@@ -41,7 +41,11 @@ python -m app.run --tasks fixtures/tasks.json --tier attrs --run-id local-001
 
 Set `--tier full` to capture GenAI prompt and response bodies. `attrs` records span metadata and real provider token usage without message bodies. Run identifiers and task identifiers are attached to every span; add `--eval` or set `is_eval: true` on a task to tag its trace for evaluation.
 
-Spans are exported to Phoenix and persisted in `backend/data/agenttrace.duckdb`. `serialized_bytes` is measured by serializing each span through the OTLP protobuf encoder at export time.
+Spans are exported to Phoenix and persisted in `backend/data/agenttrace.duckdb`. `serialized_bytes` is measured by serializing each span through the OTLP protobuf encoder at export time. The hand-written benchmark contains 28 tasks across the five failure injections and seven clean cases. Run all tasks with `python -m app.run --tasks fixtures/tasks.json --tier attrs --run-id local-fixtures`; task entries with `expected_failure_class` are automatically tagged `agenttrace.is_eval = true`.
+
+Fixture injection is applied by wrappers around graph nodes in `app/agent/injections.py`; the graph nodes do not inspect injection labels. Retrieval miss and cascade fixtures restrict search to an absent document id, tool timeout sleeps past the configured wrapper deadline and records an ERROR tool span, model hallucination uses a synthesis prompt without the abstention instruction, and orchestration loop forces critique to its three-revision cap. The cascade additionally records a failed output assertion after the retrieval miss.
+
+The classifier receives only `EvidenceSpan` values in `app/analysis/failure_classifier.py`. Query code builds those values from a whitelist of status, operation, retrieval count/score, critique-cap, and output-assertion signals. It does not pass answer text, fixture metadata, or `agenttrace.injected_failure`; that ground-truth attribute is removed from trace-detail responses. The scorer reads the injection marker only after classification and maps the mode to its class; it uses `expected_failure_class` as a fallback. Clean cases contribute to overall accuracy and are excluded from the 4x4 failure-class matrix.
 
 ### GenAI semantic conventions checked
 

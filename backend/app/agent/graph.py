@@ -2,6 +2,7 @@
 
 import json
 import re
+from collections.abc import Callable
 from pathlib import Path
 from typing import Any, TypedDict
 
@@ -36,6 +37,7 @@ class AgentState(TypedDict, total=False):
     answer: str
     supported: bool
     revision: int
+    corpus_ids: list[str]
 
 
 def load_corpus() -> list[dict[str, str]]:
@@ -55,11 +57,14 @@ def load_corpus() -> list[dict[str, str]]:
     return documents
 
 
-def keyword_search(query: str, limit: int = 4) -> list[Document]:
+def keyword_search(query: str, limit: int = 4, doc_ids: list[str] | None = None) -> list[Document]:
     """A small normalized term-frequency/inverse-document-frequency ranker."""
     tokenize = lambda s: re.findall(r"[a-z0-9]+", s.lower())
     query_terms = set(tokenize(query))
     corpus = load_corpus()
+    if doc_ids is not None:
+        allowed = set(doc_ids)
+        corpus = [document for document in corpus if document["doc_id"] in allowed]
     term_sets = [set(tokenize(d["text"] + " " + d["title"])) for d in corpus]
     scored: list[Document] = []
     for doc, terms in zip(corpus, term_sets):
@@ -122,7 +127,10 @@ def build_summarizer(tier: str):
     return graph.compile()
 
 
-def build_agent(tier: str):
+Node = Callable[[AgentState], dict[str, Any]]
+
+
+def build_agent(tier: str, *, node_wrapper: Callable[[str, Node], Node] | None = None):
     def plan(state: AgentState) -> dict[str, Any]:
         with tracer.start_as_current_span("agenttrace.plan") as span:
             span.set_attribute("agenttrace.operation", "plan")
@@ -140,10 +148,14 @@ def build_agent(tier: str):
     def retrieve(state: AgentState) -> dict[str, Any]:
         with tracer.start_as_current_span("agenttrace.retrieve") as span:
             span.set_attribute("agenttrace.operation", "retrieve")
-            documents = keyword_search(state.get("search_query", state["question"]))
+            query = state.get("search_query", state["question"])
+            documents = keyword_search(query, doc_ids=state.get("corpus_ids"))
+            if not documents and query != state["question"]:
+                query = state["question"]
+                documents = keyword_search(query, doc_ids=state.get("corpus_ids"))
             span.set_attribute("gen_ai.operation.name", "retrieval")
             span.set_attribute("gen_ai.data_source.id", "agenttrace-corpus")
-            span.set_attribute("gen_ai.retrieval.query.text", state.get("search_query", state["question"]))
+            span.set_attribute("gen_ai.retrieval.query.text", query)
             span.set_attribute("gen_ai.retrieval.documents", json.dumps([{"id": d["doc_id"], "score": d["score"]} for d in documents]))
             if current_capture_tier() == "full":
                 span.set_attribute("agenttrace.retrieval.document_bodies", json.dumps([d["text"] for d in documents], ensure_ascii=False))
@@ -192,18 +204,20 @@ def build_agent(tier: str):
             )
             parsed = _json_object(raw)
             supported = bool(parsed.get("supported", False))
-            return {"supported": supported, "feedback": str(parsed.get("feedback", "")), "revision": state.get("revision", 0) + (0 if supported else 1)}
+            revision = state.get("revision", 0) + (0 if supported else 1)
+            span.set_attribute("agenttrace.critique.iteration", state.get("revision", 0) + 1)
+            span.set_attribute("agenttrace.critique.hit_cap", not supported and revision >= 3)
+            return {"supported": supported, "feedback": str(parsed.get("feedback", "")), "revision": revision}
 
     def after_critique(state: AgentState) -> str:
         return "done" if state.get("supported", False) or state.get("revision", 0) >= 3 else "revise"
 
     graph = StateGraph(AgentState)
-    graph.add_node("plan", plan)
-    graph.add_node("retrieve", retrieve)
-    graph.add_node("summarize", summarize)
-    graph.add_node("tool", tool)
-    graph.add_node("synthesize", synthesize)
-    graph.add_node("critique", critique)
+    nodes: dict[str, Node] = {"plan": plan, "retrieve": retrieve, "summarize": summarize, "tool": tool, "synthesize": synthesize, "critique": critique}
+    if node_wrapper is not None:
+        nodes = {name: node_wrapper(name, node) for name, node in nodes.items()}
+    for name, node in nodes.items():
+        graph.add_node(name, node)
     graph.add_edge(START, "plan")
     graph.add_edge("plan", "retrieve")
     graph.add_edge("retrieve", "summarize")
@@ -214,7 +228,7 @@ def build_agent(tier: str):
     return graph.compile()
 
 
-def run_question(question: str, *, tier: str, max_revisions: int = 3) -> dict[str, Any]:
+def run_question(question: str, *, tier: str, max_revisions: int = 3, corpus_ids: list[str] | None = None, node_wrapper: Callable[[str, Node], Node] | None = None) -> dict[str, Any]:
     # A failed critique may send the graph through plan again at most three times.
-    result = build_agent(tier).invoke({"question": question, "revision": 0}, config={"recursion_limit": 6 * (max_revisions + 1) + 5})
+    result = build_agent(tier, node_wrapper=node_wrapper).invoke({"question": question, "revision": 0, "corpus_ids": corpus_ids}, config={"recursion_limit": 6 * (max_revisions + 1) + 5})
     return {"answer": result.get("answer", ""), "supported": result.get("supported", False), "revision_count": result.get("revision", 0)}
